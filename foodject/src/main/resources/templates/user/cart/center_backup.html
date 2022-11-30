@@ -1,0 +1,267 @@
+
+<style>
+.cartbox{
+	/* offset-x | offset-y | blur-radius | spread-radius | color */
+	box-shadow: 2px 2px 20px 1px rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+	margin:auto;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+	margin-bottom:10px;
+}
+.imgbox{
+	width:20%;
+	margin:2% 2% 2% 2%;
+	display:inline-block;
+}
+.cartdata{
+	display:inline-block;
+	margin:2% 2% 2% 2%;
+	width:70%;
+	
+}
+.mn_name{
+	position:relative;
+	top:2%;
+	display:inline-block;
+}
+.delete_box{
+	display:inline-block;
+}
+.quantity{
+	display:inline-block;
+}
+.price{
+	display:inline-block;
+}
+.optionbox{
+	margin:0 5% 2% 40%;
+	position:relative;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+	background-color:rgba(0, 0, 0, 0.1);
+}
+.optiontable{
+	margin:3% 3% 3% 3%;
+}
+.summarybox{
+	margin-top:20px;
+}
+.summaryArea{
+	display: inline-block;
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+</style>
+
+<script>
+function goOrder(){
+	var totalPrice = $('#totalPrice_data').val();
+	var allmin = $('#allmin').val();
+	//alert(totalPrice+'   '+allmin);
+	if(totalPrice == 0){
+		alert('장바구니가 비었습니다.');
+	}else if(totalPrice*1 < allmin*1){
+		alert('최소 주문 금액은 '+allmin+"원 입니다.");
+	}else{
+		
+		var priceArr = [];
+		var error = 0;
+		$('.cartbox').each(function(index, element){
+			var cartId = parseInt($(element).find(".cartId").val());
+			var deprice = $('#crprice_val'+cartId).val();
+			//var arr = [cartId,deprice];
+			//priceArr.push(arr);
+			
+			$.ajax({
+				url:'cart/updateDeprice',
+				data:{'cartId':cartId, 'deprice':deprice},
+				async: false,	//동기식으로 처리
+				success:function(data){
+					error = data;
+					if(error == 1){
+						alert("error");
+					}
+				}
+			});
+		});
+		if(error ==0){
+			//alert("주문 화면으로 이동합니다.");
+			var totalPrice = $('#totalPrice_data').val();
+			//var uid = $('#uid_data').val();
+			//alert(uid+'  '+ totalPrice);
+			
+			$('#order_form').attr({
+				'method':'post',
+				'action':'/cart/order'
+			});
+			$('#order_form').submit();
+			
+			//location.href="/cart/order?uid="+uid;	
+			
+			
+		}
+	}
+
+}
+
+function displayPrice(){
+
+	$('.cartbox').each(function(index, element){
+		
+		var cartId = parseInt($(element).find(".cartId").val());
+		var crPrice = parseInt($(element).find(".price_val").val());
+		//alert(cartId +'  '+crPrice);
+		
+		var arr = document.getElementsByClassName("ocprice"+cartId);
+ 		for (var i = 0; i < arr.length; i++) {
+			var ocPrice = parseInt(arr[i].value);
+			crPrice += ocPrice;		
+		}
+ 		$('#crprice_text'+cartId).text('￦ '+crPrice);
+ 		$('#crprice_val'+cartId).val(crPrice);
+ 		/*
+		$('.optiondata').each(function(index,element){
+			var ocPrice = parseInt($(element).find(".ocprice"+cartId).val());
+			if(ocPrice != NaN){
+				alert(ocPrice);
+			}
+			
+		})
+		*/
+		//alert(crPrice);	
+		
+	})
+	
+}
+
+
+function displayTotalPrice(){
+	
+	var arr = document.getElementsByClassName("price_val");
+	var totalPrice = 0;
+	for (var i = 0; i < arr.length; i++) {
+		var price = parseInt(arr[i].value);
+		//alert(arr[i].value);
+		totalPrice = totalPrice + price;
+	}
+	$('#totalPrice').text(totalPrice);
+	$('#totalPrice_data').val(totalPrice);
+}
+
+
+
+function deleteCart(cartId){
+	var uid = $('#uid_index').val();
+	var prevUrl = $('#prevUrl_index').val();
+	location.href='/cart/delete?uid='+uid+'&cartId='+cartId+'&prevUrl='+prevUrl;
+}
+
+$(document).ready(function(){
+	var uid = $('#uid_index').val();
+	$('#uid_data').val(uid);
+	
+	//var prevUrl = $('#prevUrl_index').val();
+	//alert(prevUrl);
+	displayPrice();
+	displayTotalPrice();
+});
+
+</script>
+
+<section class="py-8 overflow-hidden">
+
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="card card-span mb-3 shadow-lg">
+          <div class="card-body py-0">
+            <div class="row justify-content-center">
+                <div class="p-5">
+              <h1 class="card-title mt-xl-5 mb-4 text-center"><span class="text-primary"><i class="fas fa-hamburger me-2"></i>Food Box</span>&nbsp 장바구니</h1>
+
+              	  <div th:if="${count} == 0"  class="px-6 pb-5">
+              		<div class="cartbox">
+                	  <div class="card-body">                	   
+                	   <img class="img-fluid rounded-3 w-100" src=https://kr.object.ncloudstorage.com/foodject/shop/emptypage.jpg>                	  
+                	  </div>
+                	</div>
+                  </div>
+
+                
+                
+			      <div class="cartbox" th:each="cr:${crlist}"><!-- start of .container-->
+			    	<!-- 좌측 이미지 start-->
+			    	<div class="imgbox">
+			    		<img class="img-fluid rounded-3 h-100" th:if="${cr.img != null }" 
+								th:src="'https://kr.object.ncloudstorage.com/foodject/menu/'+${cr.img}" alt="error1" />
+						<img class="img-fluid rounded-3 h-100" th:unless="${cr.img != null }" 
+								src="https://kr.object.ncloudstorage.com/foodject/menu/default.jpg" alt="error2" />
+			    	</div>
+			    	<!-- 좌측 이미지 end-->
+			    	<!-- 우측 장바구니 정보 start -->
+				    <div class="cartdata">
+				    	<div class="mn_name col-10">
+
+				    		<h3 th:text="${cr.mname}" class="mn_name_txt">메뉴 이름</h3>
+
+				    	</div>
+				    	<div class="delete_box col-1">
+				    		<h1><a href="#" th:onclick="deleteCart([[${cr.id}]]);"><i class='far fa-trash-alt' style='font-size:36px'></i></a>️</h1>
+				    	</div>
+				    	
+						<div class="quantity col-3">
+				    		<lable for="quantity">수량:</lable>
+				    		<input id="quantity" type="number" th:value="${cr.num}" min="1" style="width:50px" readonly="readonly">
+				    	</div>
+				    	<div class="price" >
+				    		<h4 th:id="'crprice_text'+${cr.id}"></h4>
+				    		<form th:id="'price_form'+${cr.id}">
+					    		<input type="hidden" th:id="'crprice_val'+${cr.id}" th:value="${cr.total}" class="price_val">
+					    		<input type="hidden" th:value="${cr.id}" class="cartId">
+					    	</form>
+				    	</div>
+				    </div>
+			    	<!-- 우측 장바구니 정보 start -->
+			    	<br>
+			    	<!-- 하단 옵션 start -->
+			    	
+			    	<div th:if="${cr.count != 0}">
+			    		<div class="optionbox">
+				    		<h5 style="text-align: center">추가 옵션</h5>
+				    		<table class="optiontable">
+				    			<tr th:each="oc:${oclist}" th:if="${oc.ctid == cr.id}" class="optiondata">
+				    				<td th:text="${oc.name}+' / '">옵션 이름</td>
+				    				<td th:text="${oc.price}+' 원'">옵션 가격</td>
+				    				<input type="hidden" th:value="${oc.price}" th:class="'ocprice'+${cr.id}">
+				    			</tr>
+				    				
+				    		</table>
+			    		</div>
+					</div>
+					
+					<!-- 하단 옵션 end -->
+			    </div><!-- end of .container-->   
+			
+			    <div class="summarybox" th:if="${count} != 0">
+				   	<div class="summaryArea">
+				   		<button type="button" class="btn btn-danger" onclick="goOrder();">주문하기</button>
+				   	</div>
+				    <div class="summaryArea">
+				    	<h1><span >총 가격 : </span><span id="totalPrice" ></span></h1>
+				    </div>
+			    </div>
+			        <form id="order_form">
+			            <input type="hidden" id="uid_data" name="uid">
+			            <input type="hidden" id="totalPrice_data" name="totalPrice">
+		          	</form>		
+			   </div> 
+			   <input type="number" id="allmin" th:if="${count} != 0" th:value="${shop.allmin}" >           
+            </div>  
+		  </div>
+		</div>
+	  </div>
+	</div>
+  </div>
+
+</section>

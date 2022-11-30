@@ -1,3 +1,8 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
+
 <script type="text/javascript"
   th:src="'//dapi.kakao.com/v2/maps/sdk.js?appkey=' + ${kakaosrc} + '&libraries=services'"></script>
 <script>
@@ -12,7 +17,7 @@
    
     $('#mncancel').click(function () {
     	var id =   $('input[name="gtcl2"]').val();
-		var collid =   $('input[name="gtcll2"]').val();
+		var collid =   $('input[name="gtcl2"]').val();
 		var sid =   $('input[name="gtsid2"]').val();
       location.href = "/host/menu/msel?id="+id+"&collid="+collid+"&sid="+sid;
     });
@@ -67,7 +72,7 @@
 <div class="col-12 grid-margin stretch-card">
   <div class="card">
     <div class="card-body">
-      <h4 class="card-title" th:text="${col.name} + ' 메뉴 추가'">메뉴 등록</h4>
+      <h4 style= "color: #ffa000; font-family: 'Jua', sans-serif; " class="card-title" th:text="${col.name} + ' 메뉴 추가'">메뉴 등록</h4>
       <form class="registerform" id="registerform">
         <div class="form-group">
         
@@ -84,7 +89,7 @@
 				<input th:id="'gtcll2'+${mn.collid}"  type="number" 
                     name="gtcll2"  value="gtcll2" th:value="${mn.collid}" hidden="hidden">
 				</div>
-          <label>메뉴 이미지</label>
+          <label style= "color: #ffa000; font-family: 'Jua', sans-serif; ">메뉴 이미지</label>
           <div class="input-group col-xs-12">
             <input type="file" class="form-control file-upload-info" id="mnimg" name="mf" placeholder="Upload Image"
               accept=".jpg, .jpeg, .png">
@@ -97,20 +102,20 @@
         
       
         <div class="form-group">
-          <label for="name">메뉴명</label>
+          <label for="name" style= "color: #ffa000; font-family: 'Jua', sans-serif; ">메뉴명</label>
           <input type="text" class="form-control" id="name" name="name" placeholder="메뉴명">
         </div>
        
         <div class="form-group">
-          <label for="price">가격</label>
+          <label for="price" style= "color: #ffa000; font-family: 'Jua', sans-serif; ">가격</label>
           <input type="number" class="form-control" id="price" name="price" placeholder="메뉴 가격">
         </div>
          <div class="form-group">
-          <label for="line">순서</label>
+          <label for="line" style= "color: #ffa000; font-family: 'Jua', sans-serif; ">순서</label>
           <input type="number" class="form-control" id="line" name="line" placeholder="메뉴 순서">
         </div>
          <div class="form-group">
-          <label for="cid">카테고리</label>
+          <label for="cid" style= "color: #ffa000; font-family: 'Jua', sans-serif; ">카테고리</label>
           <select name="cid" class="form-control form-control-item" id="cid">
                 	<option th:each="ct:${ctlist}" 
                 	th:value="${ct.id}" 
@@ -126,8 +131,8 @@
           <label for="collid">컬렉션 ID</label>
           <input type="collid" class="form-control" id="collid" name="collid" th:value="${col.id}" placeholder="COLLECTION ID">
         </div>
-        <button class="btn btn-primary" id="mnsubmit" type="button">등록</button>
-        <button class="btn btn-light" id="mncancel" type="button">취소</button>
+        <button class="btn btn-primary" id="mnsubmit" type="button" style= " font-family: 'Jua', sans-serif; ">등록</button>
+        <button class="btn btn-light" id="mncancel" type="button" style= "color: #ffa000; font-family: 'Jua', sans-serif; ">취소</button>
       </form>
     </div>
   </div>

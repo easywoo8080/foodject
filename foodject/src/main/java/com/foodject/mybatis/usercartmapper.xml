@@ -6,13 +6,14 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	
 
 	<insert id="insert" parameterType="usercartVO">
-		INSERT INTO cart VALUES (null, #{uid} , #{mnid} , #{num})
+		INSERT INTO cart VALUES (null, #{uid} , #{mnid} , #{num}, null)
 		<selectKey keyColumn="" keyProperty="id" order="AFTER" resultType="Integer">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
 	</insert>
 	
 	<!-- 장바구니는 기본적으로 수정이 안됨. 삭제하고 다시 추가하는 것이 맞다. -->
+
 	<!-- update는 cnt만 수정하는 걸로 -->
 	<update id="updateNum" parameterType="usercartVO">
 		UPDATE cart SET num=#{num} WHERE id=#{id}
@@ -20,6 +21,10 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	
 	<update id="updateCount" parameterType="usercartVO">
 		UPDATE cart SET count=#{count} WHERE id=#{id}
+	</update>
+	
+	<update id="updateDeprice" parameterType="usercartVO">
+		UPDATE cart SET deprice=#{deprice} WHERE id=#{id}
 	</update>
 	
 	<delete id="delete" parameterType="Integer">
@@ -41,9 +46,10 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="select_byUid" parameterType="usercartVO" resultType="usercartVO">
-		SELECT *, (price*num) as total FROM cart cr
+		SELECT cr.id, cr.uid, cr.mnid, cr.num, cr.deprice, mn.name AS mname, mn.price AS mprice, (price*num) as total, i.img FROM cart cr
 		INNER JOIN menu mn ON mn.id=cr.mnid
-		WHERE cr.uid=#{uid} AND mn.sid=#{sid}
+		LEFT OUTER JOIN img i ON mn.id=i.outid
+		WHERE cr.uid=#{uid} AND mn.sid=#{sid} AND (i.table='menu' OR i.table IS NULL)
 	</select>
 	
 	<select id="selectSid_byUid" parameterType="String" resultType="Integer">
@@ -51,6 +57,6 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		INNER JOIN menu mn ON cr.mnid = mn.id
 		WHERE uid=#{uid}
 	</select>
-	
+
 	
 </mapper>

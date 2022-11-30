@@ -26,6 +26,9 @@ public class UserOrdersVO {
 	private int status;
 	private String ask;
 	
+	
+	
+	
 	public UserOrdersVO(int id, String uid, int sid, String addr, String addrd, String phon, String nick, Date date,
 			String ask) {
 		this.id = id;
@@ -44,6 +47,17 @@ public class UserOrdersVO {
 	}
 	public UserOrdersVO(int id, String uid, int sid, String addr, String addrd, String phon, String nick, String ask) {
 		this.id = id;
+		this.uid = uid;
+		this.sid = sid;
+		this.addr = addr;
+		this.addrd = addrd;
+		this.phon = phon;
+		this.nick = nick;
+		this.ask = ask;
+	}
+	
+	// For insert(7)
+	public UserOrdersVO(String uid, int sid, String addr, String addrd, String phon, String nick, String ask) {
 		this.uid = uid;
 		this.sid = sid;
 		this.addr = addr;

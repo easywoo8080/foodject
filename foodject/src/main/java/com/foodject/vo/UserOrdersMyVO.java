@@ -40,6 +40,7 @@ public class UserOrdersMyVO {
 	private int opprice;
 	
 	//shop
+	private String sid;
 	private String sname;
 	private String slogo;
 

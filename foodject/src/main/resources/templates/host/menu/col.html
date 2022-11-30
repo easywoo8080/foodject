@@ -1,11 +1,22 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+<style>
+#cm{
+	font-family: 'Jua', sans-serif;
+	color : #ffa000;
+}
+
+</style>
+
   <script>
  
   
   $(document).ready(function(){  
 	  $('#colimplbt').click(function(){
 		  var id =   $('input[name="gts"]').val();
-		  var sid =   $('input[name="gtc"]').val();
+		  var sid =   $('input[name="gts"]').val();
 			location.href = "/host/menu/colregister?id="+id+"&sid="+sid;
 		});
 
@@ -21,7 +32,7 @@
 <div class="col-lg-12 grid-margin stretch-card">
 	<div class="card">
 		<div class="card-body">
-			<h4 class="card-title" th:text="${sh.name} + ' 컬렉션 관리'">컬렉션 관리</h4>
+			<h4 id="cm" class="card-title" th:text="${sh.name} + ' 컬렉션 관리'">컬렉션 관리</h4>
 			<div > 
 				<input th:id="'gts'+${sh.id}"  type="number" 
                     name="gts"  value="gts" th:value="${sh.id}" hidden="hidden" >
@@ -34,18 +45,15 @@
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th>컬렉션 명</th>
+							<th style= "color: #ffa000; font-family: 'Jua', sans-serif; " >컬렉션 명</th>
 							
 						</tr>
 					</thead>
 					<tbody th:if="${clist != null}" >
-						<tr  th:each="c:${clist}">
+						<tr style= "font-family: 'Jua', sans-serif; " th:each="c:${clist}">
 							
 							<td ><a th:text="${c.name}" th:href="@{msel(collid=${c.id},id=${c.id},sid=${sh.id})}">name</a></td>
-							<td>
-								
-							</td>
-							<td>$ 77.99</td>
+							
 
 							
 						</tr>
@@ -55,8 +63,8 @@
 				</table>
 			</div>
 			<hr><center>
-			<button id="colimplbt" type="button" class="btn btn-info">컬렉션 등록</button>
-			<button id="backbtn1" type="button" class="btn btn-info">뒤로 가기</button>
+			<button id="colimplbt" type="button" class="btn btn-info" style= "font-family: 'Jua', sans-serif; ">컬렉션 등록</button>
+			<button id="backbtn1" type="button" class="btn btn-info" style= "font-family: 'Jua', sans-serif; ">뒤로 가기</button>
 			
 			</center>
 		</div>

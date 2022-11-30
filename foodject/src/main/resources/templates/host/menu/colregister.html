@@ -1,3 +1,7 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
 <script type="text/javascript"
   th:src="'//dapi.kakao.com/v2/maps/sdk.js?appkey=' + ${kakaosrc} + '&libraries=services'"></script>
 <script>
@@ -12,7 +16,7 @@
    
     $('#colcancel').click(function () {
     	 var id =   $('input[name="gts2"]').val();
-		  var sid =   $('input[name="gtc2"]').val();
+		  var sid =   $('input[name="gts2"]').val();
       location.href = "/host/menu/col?id="+id+"&sid="+sid;
     });
     $('#colsubmit').click(function () {
@@ -43,7 +47,7 @@
 <div class="col-12 grid-margin stretch-card">
   <div class="card">
     <div class="card-body">
-      <h4 class="card-title" th:text="${sh.name}  + ' 컬렉션 추가'">컬렉션 등록</h4>
+      <h4 style= "color: #ffa000; font-family: 'Jua', sans-serif; " class="card-title" th:text="${sh.name}  + ' 컬렉션 추가'">컬렉션 등록</h4>
        <div class="form-group">
         
    		   <div > 
@@ -57,26 +61,26 @@
         </div>
       <form class="registerform" id="colregisterform">
        <div class="form-group"  hidden="hidden">
-          <label for="sid">sid</label>
+          <label for="sid" style= "color: #ffa000; font-family: 'Jua', sans-serif; ">sid</label>
           <input type="number" class="form-control" id="sid" name="sid" th:value="${sh.id}"  placeholder="shopID" >
         </div>
         
         
       
         <div class="form-group">
-          <label for="name">컬렉션명</label>
+          <label for="name" style= "color: #ffa000; font-family: 'Jua', sans-serif; ">컬렉션명</label>
           <input type="text" class="form-control" id="name" name="name" placeholder="컬렉션명">
         </div>
        
         
          <div class="form-group">
-          <label for="line">순서</label>
-          <input type="number" class="form-control" id="line" name="line" placeholder="메뉴 순서">
+          <label for="line" style= "color: #ffa000; font-family: 'Jua', sans-serif; ">순서</label>
+          <input type="number" class="form-control" id="line" name="line" placeholder="컬렉션 순서">
         </div>
        
        
-        <button class="btn btn-primary" id="colsubmit" type="button">등록</button>
-        <button class="btn btn-light" id="colcancel" type="button">취소</button>
+        <button class="btn btn-primary" id="colsubmit" type="button" style= "font-family: 'Jua', sans-serif; ">등록</button>
+        <button class="btn btn-light" id="colcancel" type="button" style= "color: #ffa000; font-family: 'Jua', sans-serif; ">취소</button>
       </form>
     </div>
   </div>

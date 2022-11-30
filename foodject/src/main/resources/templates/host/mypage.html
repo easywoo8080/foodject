@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -62,9 +66,9 @@
           <div class="col-lg-4 mx-auto">
             <div class="auth-form-light text-left py-5 px-4 px-sm-5">
               <div class="brand-logo">
-                <a href="/host"><img src="/bootstrap/skydash/images/logo.svg" alt="logo"></a>
+                <a href="/host"><img src="/bootstrap/foodwagon/assets/img/gallery/logo.svg" alt="logo"></a>
               </div>
-              <h4 th:text="${m.name} + '님의 프로필'"></h4>
+              <h2 style= "color: #ffa000; font-family: 'Jua', sans-serif; " th:text="${m.name} + '님의 프로필'"></h2>
               <p class="font-weight-light">개인정보를 수정하실 수 있습니다.</p>
               <form class="pt-3" id="update_form">
                 <div class="form-group">
@@ -74,7 +78,7 @@
                 </div>
                 <div class="form-group">
                 <label for="pwd">비밀번호:</label>
-                <a class="btn btn-primary btn-sm" type="button" href="/host/changepwd" >비밀번호 변경</a>
+                <a  class="btn btn-primary btn-sm" type="button" href="/host/changepwd" ><span style= " font-family: 'Jua', sans-serif; ">비밀번호 변경</span></a>
                 <input type="password" class="form-control form-control-lg" id="pwd" placeholder="Password" name="pwd" value="pwd01" th:value=${m.pwd} hidden="hidden">
                 </div>
                	
@@ -124,10 +128,10 @@
                 
               
                 <div class="mt-3">
-                  <button id="updatebt"  type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">UPDATE</button>
+                  <button id="updatebt"  type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" style= " font-family: 'Jua', sans-serif; ">정보수정</button>
                 </div>
                 <div class="mt-3">
-                  <button id="deletebt" type="submit"  class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">WITHDRAWAL</button>
+                  <button id="deletebt" type="submit"  class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn"style= " font-family: 'Jua', sans-serif; ">회원탈퇴</button>
                 </div>
               </form>
             </div>

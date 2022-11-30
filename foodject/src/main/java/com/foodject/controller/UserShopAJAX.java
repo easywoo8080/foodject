@@ -2,12 +2,16 @@ package com.foodject.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.foodject.biz.UserCartBiz;
+import com.foodject.biz.UserCustBiz;
 import com.foodject.biz.UserOptcartBiz;
+import com.foodject.vo.AddrVO;
 import com.foodject.vo.UserCartVO;
 import com.foodject.vo.UserCustVO;
 import com.foodject.vo.UserOptcartVO;
@@ -17,10 +21,33 @@ import com.foodject.vo.UserOptcartVO;
 public class UserShopAJAX {
 	
 	@Autowired
+	UserCustBiz csbiz;
+	
+	@Autowired
 	UserCartBiz crbiz;
 	
 	@Autowired
 	UserOptcartBiz opbiz;
+	
+	@RequestMapping("/changeCnt")
+	public Object changeCnt(String uid, int sid) {
+		List<UserCartVO> crlist= null;
+		int cnt=0;
+
+		try {
+			crlist = crbiz.get_byUid(new UserCartVO(0,uid,sid));
+			cnt = crlist.size();
+			return cnt;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
+		
+		// System.out.println(row);
+			
+		
+		
+	}
 	
 	@RequestMapping("/addCart")
 	public Object addCart(String uid, int mnid, int num, int chk, int sid) {
@@ -37,8 +64,7 @@ public class UserShopAJAX {
 				
 			}
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			System.out.println("first cartAdd");
 		}
 		
 		List<UserCartVO> list = null;
@@ -96,4 +122,42 @@ public class UserShopAJAX {
 		}
 		return cartId;
 	}
+	
+	@RequestMapping("/registerAddr")
+	public Object registerAddr(String addr, String addrd, HttpSession session, HttpSession sessionAddr) {
+		UserCustVO cust = (UserCustVO) session.getAttribute("loginid");
+		AddrVO addrObj = new AddrVO();
+		addrObj.setAddr(addr);
+		addrObj.setAddrd(addrd);
+		
+		if(cust == null) {
+			// 주소세션에 검색한 주소 추가하기
+			sessionAddr.setAttribute("addrObj", addrObj);
+			System.out.println("주소세션에 addrObj 추가");
+			return 1;
+		}else {
+			String uid = cust.getId();
+			addrObj.setId(uid);
+			try {
+				csbiz.modifyAddr(addrObj);
+				System.out.println("배송지 업데이트");
+				cust = csbiz.get(uid);
+				session.setAttribute("loginid", cust);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.out.println("배송지 업데이트중 오류 발생");
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
 }

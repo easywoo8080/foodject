@@ -1,4 +1,6 @@
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 
 <style>
 #imgviewer{
@@ -14,46 +16,50 @@
 <script>
 $(document).ready(function(){
 	//Menu Buttons
+	$('#mypagebtn').click(function(){
+ 		var uid = $('#uid_index').val();
+		location.href='/cust?uid='+uid;
+	});
 	$('#update').click(function(){
- 		location.href='/cust/update';
+  		var uid = $('#uid_index').val();
+ 		location.href='/cust/update?uid='+uid;
 	});
 	$('#myorders').click(function(){
- 		location.href='/cust/myorders';
+		var uid = $('#uid_index').val();
+ 		location.href='/cust/myorders?uid='+uid;
 	});
 	$('#cs').click(function(){
  		location.href='/cust/cs';
 	});
-	
-	$('#imgbtn').click(function(){
-		$('#inputimg').click(function(){
-			
-		});
-	});
+
 });
 
 </script>
 
-<section class="pb-5 pt-8">
 
+<section class="pb-5 pt-8">
+<h5 th:if="${session.loginid != null}">
+   <input type="hidden" id="uid_index" name="uid" th:value="${session.loginid.id}">           	
+</h5>
   <div class="container">
     <div class="row">
       <div class="col-12">
         <div class="card card-span mb-3 shadow-lg">
           <div class="card-body py-0">
             <div class="row justify-content-center">
-             <div class="col-md-7 col-xl-5 col-xxl-4 p-4 p-lg-5">
-                <h1 class="card-title mt-xl-5 mb-4 text-center">My Page <a href="/cust"><span class="text-primary">마이페이지</span></a></h1>
+             <div  class="col-md-7 col-xl-5 col-xxl-4 p-4 p-lg-5">
+                <h1 style= "font-family: 'Jua', sans-serif; "  class="card-title mt-xl-5 mb-4 text-center">My Page <a id="mypagebtn"><span style= " font-family: 'Jua', sans-serif; "  class="text-primary">마이페이지</span></a></h1>
                 <div class="d-grid bottom-0">
-                <a class="btn btn-lg btn-primary mt-xl-6" id="update">회원정보수정하기</a><p></p>
-                <a class="btn btn-lg btn-primary mt-xl-6" id="myorders">주문내역 조회</a><p></p>
-                <a class="btn btn-lg btn-primary mt-xl-6" id="cs">고객센터</a><p></p>
+                <a style= " font-family: 'Jua', sans-serif; "  class="btn btn-lg btn-primary mt-xl-6" id="update">회원정보수정하기</a><p></p>
+                <a style= " font-family: 'Jua', sans-serif; "  class="btn btn-lg btn-primary mt-xl-6" id="myorders">주문내역 조회</a><p></p>
+                <a style= " font-family: 'Jua', sans-serif; "  class="btn btn-lg btn-primary mt-xl-6" id="cs">고객센터</a><p></p>
                 </div>
               </div>
             
             <!-- ===본문내용=== -->
               <div class="col-md-5 col-xl-7 col-xxl-8 g-0 order-0 order-md-1">
-              <h1 class="card-title mt-xl-5 mb-4 text-center text-primary pt-5">Foodject Member</h1>               
-                <h2 class="card-title mt-xl-5 mb-4 text-center" th:text="${c.nick}+'님'"></h2>        
+              <h1 style= "color: #ffa000; font-family: 'Jua', sans-serif; "  class="card-title mt-xl-5 mb-4 text-center text-primary pt-5">회원님, 반갑습니다!</h1>               
+                <h2 style= " font-family: 'Jua', sans-serif; "  class="card-title mt-xl-5 mb-4 text-center" th:text="${c.nick}+'님'"></h2>        
                 <div class="col text-center pb-6">
 		          <img id="imgviewer" class="img-fluid rounded-3 h-100" th:if="${c.img != null }" th:src="${'https://kr.object.ncloudstorage.com/foodject/cust/'+c.img}" alt="image" />
 				  <img id="imgviewer" class="img-fluid rounded-3 h-100" th:unless="${c.img != null }" src="https://kr.object.ncloudstorage.com/foodject/cust/icon.jpg" alt="image" />

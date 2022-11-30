@@ -1,0 +1,345 @@
+
+<style>
+.cartbox{
+	/* offset-x | offset-y | blur-radius | spread-radius | color */
+	box-shadow: 2px 2px 20px 1px rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+	margin:auto;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+	margin-bottom:10px;
+}
+.imgbox{
+	width:20%;
+	margin:2% 2% 2% 2%;
+	display:inline-block;
+}
+.cartdata{
+	display:inline-block;
+	margin:2% 2% 2% 2%;
+	width:70%;
+	
+}
+.mn_name{
+	position:relative;
+	top:2%;
+	display:inline-block;
+}
+.delete_box{
+	display:inline-block;
+}
+.quantity{
+	display:inline-block;
+}
+.price{
+	display:inline-block;
+}
+.optionbox{
+	margin:0 5% 2% 40%;
+	position:relative;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+	background-color:rgba(0, 0, 0, 0.1);
+}
+.optiontable{
+	margin:3% 3% 3% 3%;
+}
+.summarybox{
+	margin-top:20px;
+}
+.summaryArea{
+	display: inline-block;
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+</style>
+
+<script>
+function goOrder(){
+	var totalPrice = $('#totalPrice_data').val();
+	var allmin = $('#allmin').val();
+	//alert(totalPrice+'   '+allmin);
+	if(totalPrice == 0){
+		alert('장바구니가 비었습니다.');
+	}else if(totalPrice*1 < allmin*1){
+		alert('최소 주문 금액은 '+allmin+"원 입니다.");
+	}else{
+		
+		var priceArr = [];
+		var error = 0;
+		$('.cartbox').each(function(index, element){
+			var cartId = parseInt($(element).find(".cartId").val());
+			var deprice = $('#crprice_val'+cartId).val();
+			//var arr = [cartId,deprice];
+			//priceArr.push(arr);
+			
+			$.ajax({
+				url:'cart/updateDeprice',
+				data:{'cartId':cartId, 'deprice':deprice},
+				async: false,	//동기식으로 처리
+				success:function(data){
+					error = data;
+					if(error == 1){
+						alert("error");
+					}
+				}
+			});
+		});
+		if(error ==0){
+			//alert("주문 화면으로 이동합니다.");
+			var totalPrice = $('#totalPrice_data').val();
+			//var uid = $('#uid_data').val();
+			//alert(uid+'  '+ totalPrice);
+			
+			$('#order_form').attr({
+				'method':'post',
+				'action':'/cart/order'
+			});
+			$('#order_form').submit();
+			
+			//location.href="/cart/order?uid="+uid;	
+			
+			
+		}
+	}
+
+}
+
+function displayPrice(){
+
+	$('.cartbox').each(function(index, element){
+		
+		var cartId = parseInt($(element).find(".cartId").val());
+		var crPrice = parseInt($(element).find(".price_val").val());
+		//alert(cartId +'  '+crPrice);
+		
+		var arr = document.getElementsByClassName("ocprice"+cartId);
+ 		for (var i = 0; i < arr.length; i++) {
+			var ocPrice = parseInt(arr[i].value);
+			crPrice += ocPrice;		
+		}
+ 		$('#crprice_text'+cartId).text('￦ '+crPrice);
+ 		$('#crprice_val'+cartId).val(crPrice);
+ 		/*
+		$('.optiondata').each(function(index,element){
+			var ocPrice = parseInt($(element).find(".ocprice"+cartId).val());
+			if(ocPrice != NaN){
+				alert(ocPrice);
+			}
+			
+		})
+		*/
+		//alert(crPrice);	
+		
+	})
+	
+}
+
+
+function displayTotalPrice(){
+	
+	var arr = document.getElementsByClassName("price_val");
+	var totalPrice = 0;
+	for (var i = 0; i < arr.length; i++) {
+		var price = parseInt(arr[i].value);
+		//alert(arr[i].value);
+		totalPrice = totalPrice + price;
+	}
+	$('#totalPrice').text(totalPrice);
+	$('#totalPrice_data').val(totalPrice);
+}
+
+
+
+function deleteCart(cartId){
+	var uid = $('#uid_index').val();
+	var prevUrl = $('#prevUrl_index').val();
+	location.href='/cart/delete?uid='+uid+'&cartId='+cartId+'&prevUrl='+prevUrl;
+}
+
+$(document).ready(function(){
+	var uid = $('#uid_index').val();
+	$('#uid_data').val(uid);
+	
+	//var prevUrl = $('#prevUrl_index').val();
+	//alert(prevUrl);
+	displayPrice();
+	displayTotalPrice();
+});
+
+</script>
+
+
+
+<section class="py-8 overflow-hidden">
+
+
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="card card-span mb-3 shadow-lg">
+          <div class="card-body py-0">
+            <div class="row justify-content-center">
+                <div class="p-5">
+                
+                <!-- =====cart가 null 일 때 화면===== -->
+              	  <div th:if="${count} == 0"  class="px-6 pb-5">
+              		<div class="cartbox">
+                	  <div class="card-body">                	   
+                	   <img class="img-fluid rounded-3 w-100" src=https://kr.object.ncloudstorage.com/foodject/shop/emptypage.jpg>                	  
+                	  </div>
+                	</div>
+                  </div><!-- =====end cart가 null 일 때 화면===== -->
+                
+                
+                <!-- =====상단배너===== --> 
+                 <section class="py-0">
+			        <div class="bg-holder" style="background-image:url(bootstrap/foodwagon/assets/img/gallery/cta-two-bg.png);background-position:center;background-size:cover;">
+			        </div>
+			        <!--/.bg-holder-->
+			
+			        <div class="container">
+			          <div class="row flex-center">
+			            <div class="col-xxl-9 py-7 text-center">
+			              <h1 class="fw-bold mb-4 text-white fs-6">Food Box <br /><i class="fas fa-hamburger me-2"></i> </h1>
+			            </div>
+			          </div>
+			        </div>
+			      </section> <!-- =====end 상단배너===== --> 
+			      
+                        <!-- =====Main Header===== -->         
+			      		<div class="modal-header">
+					      	<div class="ps-3">
+					          <h2 class="modal-title"><i class="fas fa-home"></i><span th:text="'&nbsp&nbsp'+${shop.name}"></span></h2>					      	
+					      	</div>
+					    </div>
+					    
+                        <!-- =====Main Body===== -->   					    
+			      		<div class="modal-body">	
+						  <!-- 주문상세 내용  -->
+				          <div class="px-3">
+				          
+							<!--th:each 주문항목-->	
+						      <div class="cartbox" th:each="cr:${crlist}">						     	
+					              <div class="w-xxl-100">
+					                <div class="card">
+					                  <div class="card-body">
+					                  <nav>
+						                  <div class="row">
+						                  	<div class="col-md-10"></div>
+						                  	<div class="col-md-2 py-2 input-group justify-content-end px-5">
+						                    	<h2>
+						                    		<a href="#" th:onclick="deleteCart([[${cr.id}]]);"><i class='far fa-trash-alt'></i></a>
+						                    	</h2>
+						                    </div>					                  
+						                  </div>
+						                  
+						                  <div class="nav nav-tabs pb-2 px-2" id="nav-tab" role="tablist">
+						                      <div class="col-md-2">
+												<img class="img-fluid rounded-3 h-100" th:if="${cr.img != null }" 
+														th:src="'https://kr.object.ncloudstorage.com/foodject/menu/'+${cr.img}" alt="error1" />
+												<img class="img-fluid rounded-3 h-100" th:unless="${cr.img != null }" 
+														src="https://kr.object.ncloudstorage.com/foodject/menu/default.jpg" alt="error2" />											
+						                      </div>
+						                      
+						                      <div class="col-md-5 ps-3 pt-2">
+						                        <h3 th:text="${cr.mname}" >메뉴명</h3>
+									    		<p th:text="'수량:&nbsp'+${cr.num}">수량</p>					                        	                        
+						                      </div>
+						                      
+						                      <div class="col-md-5">
+						                        <div th:if="${cr.count != 0}">
+										            <li>
+					                               	  <span>기본:&nbsp</span>
+					                               	  <span >"${#numbers.formatInteger(mlist.price, 0, 'COMMA')+'원'}"</span>
+					                               	</li>								             
+										             <table  width="100%" cellspacing="0">
+									                   <tbody>
+									                     <tr >
+							                               <td th:if="${cr.count != 0}">
+								                               <li>
+								                               	<span>추가옵션(가격):&nbsp</span>
+								                               	<span th:each="oc:${oclist}" th:if="${oc.ctid == cr.id}" 
+								                               	    th:text="${oc.name}+'('+${oc.price}+'원)&nbsp&nbsp&nbsp&nbsp'"></span>  
+								                               	    <input type="hidden" th:value="${oc.price}" th:class="'ocprice'+${cr.id}">                    					                               
+								                               </li>
+							                               </td>  
+									                     </tr>
+									                     <tr >
+							                               <td><h1></h1></td>                           
+									                     </tr>
+									                   </tbody>
+										             </table>							             
+						                        </div>					                      
+						                      
+						                      </div>
+						                  </div>
+						                    
+					                  </nav>
+					                  
+				                      <div class="row gx-2 gy-2 align-items-center my-3">
+				                        <div class="col-md-4"></div> 
+				                        <div class="col-md-5">
+				                        </div>
+				                        <div class="d-grid gap-3 col-sm-auto px-2">		                        	        	                        
+											<h4 th:text="'가격:&nbsp'+${#numbers.formatInteger(cr.deprice, 0, 'COMMA')+'원'}">가격</h4>													  
+										</div>
+				                      </div>
+				                      
+							           </div>      
+					                </div>
+					              </div>						     	
+
+						      
+						      
+						      
+						      
+						      <!-- chanbin -->						             
+
+							    		<h4 th:id="'crprice_text'+${cr.id}"></h4>
+							    		<form th:id="'price_form'+${cr.id}">
+								    		<input type="hidden" th:id="'crprice_val'+${cr.id}" th:value="${cr.total}" class="price_val">
+								    		<input type="hidden"  th:value="${cr.id}" class="cartId">
+								    	</form>
+
+							</div>
+				         	
+				         	<!-- 주문가격  -->
+						    <div class="input-group justify-content-end pt-2" th:if="${count} != 0">
+							    <div class="summaryArea">
+							    	<h1><span >총 가격 : </span><span id="totalPrice" ></span></h1>
+							    </div>
+						    </div>				         	
+							<div class="modal-header justify-content-center pt-3">
+								<div class="pb-3">
+						        	<a type="button" class="btn btn-line text-dark"><i class="fas fa-cart-plus"></i>&nbsp 더 담으러 가기</a>			        	
+						        </div>
+						    </div>
+							<div class="input-group justify-content-center pt-3">						        
+							    <div class="summarybox" th:if="${count} != 0">
+								   	<div class="summaryArea">
+								   		<button type="button" class="btn btn-danger" onclick="goOrder();">주문하기</button>
+								   	</div>
+							    </div>
+						        <form id="order_form">
+						            <input type="hidden" id="uid_data" name="uid">
+						            <input type="hidden" id="totalPrice_data" name="totalPrice">
+					          	</form>						        
+						      </div>											
+				       
+				        </div>
+
+
+ 
+			   			 </div><!-- end of .container--> 
+		          	
+			   </div> 
+			   <input type="number" id="allmin" th:if="${count} != 0" th:value="${shop.allmin}" >           
+            </div>  
+		  </div>
+		</div>
+	  </div>
+	</div>
+  </div>
+
+</section>

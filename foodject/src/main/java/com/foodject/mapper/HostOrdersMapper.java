@@ -20,6 +20,11 @@ public interface HostOrdersMapper {
 	public List<HostOrdersVO> selectbill(int id) throws Exception;
 	public List<HostOrdersVO> selectorders(HostOrdersVO obj) throws Exception;
 	public int changestatus(HostOrdersVO obj) throws Exception;
+	public int mainseletcstatus(String obj) throws Exception;
+	public int mainallorders(String obj) throws Exception;
+	public HostOrdersVO mainallpriceday(HostOrdersVO obj) throws Exception;
+	public HostOrdersVO mainallpricemonth(HostOrdersVO obj) throws Exception;
+	public List<HostOrdersVO> bardayfrommonth(HostOrdersVO obj) throws Exception;
 	
 	
 }

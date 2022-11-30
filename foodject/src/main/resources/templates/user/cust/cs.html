@@ -1,12 +1,9 @@
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 
 
 <head>
-	<meta charset="UTF-8">
-	<title>Cust Websocket</title>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<script src="/webjars/sockjs-client/sockjs.min.js"></script>
-	<script src="/webjars/stomp-websocket/stomp.min.js"></script>
 	<style>
 		#me {
 			width: 400px;
@@ -163,30 +160,30 @@ $(document).ready(function(){
             <div class="row justify-content-center">
             
              <div class="col-md-7 col-xl-5 col-xxl-4 p-4 p-lg-5">
-                <h1 class="card-title mt-xl-5 mb-4 text-center">My Page <a href="/cust"><span class="text-primary">마이페이지</span></a></h1>
+                <h1 style= "font-family: 'Jua', sans-serif; " class="card-title mt-xl-5 mb-4 text-center">My Page <a href="/cust"><span style= "color: #ffa000; font-family: 'Jua', sans-serif; " class="text-primary">마이페이지</span></a></h1>
                 <div class="d-grid bottom-0">                
-                <a class="btn btn-lg btn-primary mt-xl-6" id="update" href="/cust/update">회원정보수정하기</a><p></p>
-                <a class="btn btn-lg btn-primary mt-xl-6" id="myorders" href="/cust/myorders">주문내역조회</a><p></p>
-                <a class="btn btn-danger text-white mt-xl-6" id="cs" href="/cust/cs">고객센터 &nbsp<i class="fas fa-mouse-pointer me-2"></i></a><p></p>
+                <a style= "font-family: 'Jua', sans-serif; " class="btn btn-lg btn-primary mt-xl-6" id="update" href="/cust/update">회원정보수정하기</a><p></p>
+                <a style= "font-family: 'Jua', sans-serif; " class="btn btn-lg btn-primary mt-xl-6" id="myorders" href="/cust/myorders">주문내역조회</a><p></p>
+                <a style= "font-family: 'Jua', sans-serif; " class="btn btn-danger text-white mt-xl-6" id="cs" href="/cust/cs">고객센터 &nbsp<i class="fas fa-mouse-pointer me-2"></i></a><p></p>
                 </div>
               </div>
             
               <div class="col-md-5 col-xl-7 col-xxl-8 g-0 order-0 order-md-1">
-                <h1 class="card-title mt-xl-5 mb-4 text-center">CS</h1>
+                <h1 style= "color: #ffa000; font-family: 'Jua', sans-serif; " class="card-title mt-xl-5 mb-4 text-center">CS</h1>
                 <!-- chatbot -->
 
                 <div class="col-xl-9 grid-margin stretch-card">
                   <div class="card">
                     <div class="card-body">
-                      <h4 class="card-title" th:text="${session.loginid.id}">Striped Table</h4>
+                      <h4 style= " font-family: 'Jua', sans-serif; " class="card-title" th:text="${session.loginid.id}">Striped Table</h4>
                       <div class="table-responsive" id="size">
                         <table class="table table-striped">
                           <thead>
                             <tr>
-                              <th class="chatbot">
+                              <th style= "color: #ffa000; font-family: 'Jua', sans-serif; " class="chatbot">
                                 ChatBot
                               </th>
-                              <th class="user">
+                              <th style= "color: #ffa000; font-family: 'Jua', sans-serif; " class="user">
                                 User
                               </th>
                             </tr>
@@ -198,10 +195,10 @@ $(document).ready(function(){
                       </div>
                       <div class="form-group">
                         <label for="exampleInputCity1"></label> <input type="text" class="form-control" id="metext"
-                          placeholder="질문을 적어주세요">
+                          placeholder="무엇이든 물어보세요!">
                       </div>
-                      <button id="sendme" class="btn btn-primary mr-2">질문</button>
-                      <button class="btn btn-light" id="disconnect">종료</button>
+                      <button style= "font-family: 'Jua', sans-serif; " id="sendme" class="btn btn-primary mr-2">질문</button>
+                      <button style= " font-family: 'Jua', sans-serif; " class="btn btn-light" id="disconnect">종료</button>
                     </div>
                     
               

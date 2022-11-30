@@ -63,6 +63,16 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		    AND s.status != 0
 		</if>
 	</select>
-	
+	<!-- 검색 -->
+	<select id="search" parameterType="SearchVO" resultType="usershopVO">
+		SELECT DISTINCT s.id, s.name , s.bnum, s.addr, s.addrd, s.phon, s.logo, s.status FROM shop s
+		INNER JOIN menu m ON m.sid = s.id
+		INNER JOIN mncate c ON m.cid = c.id
+	    INNER JOIN marker mk ON mk.id = s.marker
+		WHERE (mk.latt BETWEEN #{latt}-0.027 AND #{latt}+0.027)
+		AND (mk.logt BETWEEN #{logt}-0.027/COS(RADIANS(#{latt})) AND #{logt}+0.027/COS(RADIANS(#{latt})))
+		AND s.status != 0
+		AND (mn.name Like CONCAT(%,#{keyword},%)
+	</select>
 	
 </mapper>

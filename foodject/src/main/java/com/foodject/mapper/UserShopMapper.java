@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import com.foodject.vo.MarkerVO;
+import com.foodject.vo.SearchVO;
 import com.foodject.vo.UserShopVO;
 
 @Repository
@@ -23,6 +24,7 @@ public interface UserShopMapper {
 
 	public List<UserShopVO> select_byCate(int cid) throws Exception;
 	public List<UserShopVO> selectMain(MarkerVO obj) throws Exception;
+	public List<UserShopVO> search(SearchVO obj) throws Exception;
 }
 
 

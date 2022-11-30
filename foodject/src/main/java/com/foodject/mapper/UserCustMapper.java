@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import com.foodject.vo.AddrVO;
 import com.foodject.vo.UserCustVO;
 
 @Repository
@@ -16,9 +17,10 @@ public interface UserCustMapper {
 	public void update(UserCustVO obj) throws Exception;
 	public UserCustVO select(String id) throws Exception;
 	public List<UserCustVO> selectall() throws Exception;
-	public void updatests(UserCustVO obj) throws Exception;
+	public void updatests(String id) throws Exception;
 	
 	public void updateetc(UserCustVO obj) throws Exception;
 	public void updateimg(UserCustVO obj) throws Exception;
 	public void updatepwd(UserCustVO obj) throws Exception;
+	public void updateAddr(AddrVO obj) throws Exception;
 }

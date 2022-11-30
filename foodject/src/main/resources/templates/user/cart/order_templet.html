@@ -1,0 +1,150 @@
+<script>
+
+
+</script>
+
+<section class="py-8 overflow-hidden">
+
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="card card-span mb-3 shadow-lg">
+          <div class="card-body py-0">
+            <div class="row justify-content-center">
+               <div class="p-5">
+              <h1 class="card-title mt-xl-5 mb-4 text-center"><span class="text-primary"><i class="fas fa-hamburger me-2"></i>Check Out</span>&nbsp 주문페이지</h1>
+               
+               <form>              
+               <div class="row pt-2"><div class="col-lg-1"></div>                
+                
+
+                <!-- ======배달정보입력 div(좌측)====== -->
+                <div class="col-lg-6">
+             	 <div class="card">
+		          <div class="p-1">
+		          
+		             <!-- 주문하기 Header -->
+				      <div class="modal-header">
+				      	<div class="ps-3">
+				          <h4 class="modal-title"><i class="fas fa-credit-card"></i>  &nbsp 주문하기</h4>					      	
+				      	</div>
+				      </div>
+				
+				      <!-- 주문하기 배달 정보 -->
+				      <div class="modal-body">	
+				      	<div class="p-3">						      						      	
+					      	<h5 class="pb-2">배달정보</h5>
+
+							<h4>th:text ADDR</h4>
+							<h5>th:value= ADDRD"></h5><p></p>
+							<hr>
+							<input id="" class="form-control input-box form-foodwagon-control" placeholder="th:value= PHONE">													
+				      	</div>			      		
+			      	  </div>
+			      	  <div class="modal-footer">
+				         <div class="modal-body">							      						      	
+					      	<h5 class="pb-2">요청사항</h5>
+							<h6>가게사장님께</h6>
+							<input id="" class="form-control input-box form-foodwagon-control" placeholder="예) 당근 빼주세요. 김치 많이주세요.">
+			      	    </div>	
+				      </div>
+				      
+		          </div>												
+		         </div>		         
+                </div>
+
+		        
+		        <!-- =====주문상세 div (우측)===== -->                	               	
+                 <div class="col-lg-4 pt-3">
+		          <div class="p-1">
+		          
+		             <!-- 주문상세 Header -->
+				      <div class="modal-header2">
+				      	<div class="ps-3">
+				          <h5 class="modal-title"> 주문내역</h5>					      	
+				      	</div>
+				      </div>
+				
+				      <!-- 주문상세 음식정보 -->
+				      <div class="modal-body">
+				      	<h3>가게이름  th:text="${i.sname}"</h3>	
+			             <table   width="100%" style="color:black;">
+		                   <tbody>
+	                         <tr>
+                               <td><h6 >메뉴명(th:text="${m.mname}")</h6></td>	                              
+                               <td align="right">비고</td>
+		                     </tr>
+		                     <tr >
+                               <td>
+                               	<ul>
+                               	  <li>
+                               	    <p1>기본:&nbsp</p1>
+                               	    <p1>메뉴기본가격 ( th:text="${#numbers.formatInteger(m.mprice, 0, 'COMMA')+'원'}")</p1>
+                               	  </li> 
+                               	  <li>
+                               	    <p1>추가옵션(가격):&nbsp</p1>
+                               	    <p1> 추가옵션가격  th:each="opt: ${opt}" th:if="${opt.deid}==${m.deid}" 
+                               	    th:text="${opt.opname}+'('+${opt.opprice}+'원)&nbsp&nbsp&nbsp&nbsp'"</p1>
+                               	  </li>
+                               	</ul>
+                               </td>                           
+		                     </tr>
+		                     <tr >
+                               <td><h1></h1></td>                           
+		                     </tr>
+		                   </tbody>
+			             </table>
+		      		
+			      	  </div>
+			      	  
+			      	  <!-- 주문상세 최종가격 -->
+			      	  <div class="modal-footer2">
+						  <table width="100%" cellspacing="0">
+							  <tbody>
+							    <tr>
+							      <td><h6>총 주문금액</h6>   </td>
+							      <td><h6 align="right" >th:text</h6>   </td>
+							    </tr>
+							    <tr>
+							      <td><h6>배달팁</h6>   </td>
+							      <td align="right"><h6>3000원</h6>   </td>
+							    </tr>								  
+							  </tbody>
+						  </table>
+
+
+						  <table width="100%" cellspacing="0">
+							  <tbody>
+							    <tr>
+							      <td><h5>최종결제가격</h5></td>
+							      <td><h5 align="right"> th:text</h5></td>
+							    </tr>
+							  </tbody>
+						  </table>
+			      		
+			      		
+
+			      	  </div>					      
+			        </div>												
+         
+                </div>
+
+                
+                
+                <div class="col-lg-1"></div>
+                <div class="text-center p-5">
+                 <button style="width:300px;"class="btn btn-primary">결제하기</button>                               
+                </div> 
+ 				</div>		
+ 				</form>
+ 				
+ 					    
+			   </div>            
+            </div>  
+		  </div>
+		</div>
+	  </div>
+	</div>
+  </div>
+
+</section>

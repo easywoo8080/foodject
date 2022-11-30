@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <!-- ===============================================-->
+  <!--    Document Title-->
+  <!-- ===============================================-->
+  <title>Foodject 맛있는 음식 &amp; 다 함께 즐겨요 </title>
+
+
+  <!-- ===============================================-->
+  <!--    Favicons-->
+  <!-- ===============================================-->
+  <link rel="apple-touch-icon" sizes="180x180" href="/bootstrap/foodwagon/assets/img/favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/bootstrap/foodwagon/assets/img/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/bootstrap/foodwagon/assets/img/favicons/favicon-16x16.png">
+  <link rel="shortcut icon" type="image/x-icon" href="/bootstrap/foodwagon/assets/img/favicons/favicon.ico">
+  <link rel="manifest" href="/bootstrap/foodwagon/assets/img/favicons/manifest.json">
+  <meta name="msapplication-TileImage" content="/bootstrap/foodwagon/assets/img/favicons/mstile-150x150.png">
+  <meta name="theme-color" content="#ffffff">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+  <!-- ===============================================-->
+  <!--    Stylesheets-->
+  <!-- ===============================================-->
+  <link href="/bootstrap/foodwagon/assets/css/theme.css" rel="stylesheet" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script src="/webjars/sockjs-client/sockjs.min.js"></script>
+	<script src="/webjars/stomp-websocket/stomp.min.js"></script>
+  <!--  script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" / -->
+	<style>
+		#all {
+			width: 400px;
+			height: 200px;
+			overflow: auto;
+			border: 2px solid red;
+		}
+
+		#me {
+			width: 400px;
+			height: 200px;
+			overflow: auto;
+			border: 2px solid blue;
+		}
+
+		#to {
+			width: 400px;
+			height: 200px;
+			overflow: auto;
+			border: 2px solid green;
+		}
+		#dropdownMenuDate2{
+			color:  black;
+			background: #ffa000;
+			background-color: #ffa000;
+			
+		}
+	</style>
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+    var stompClient = null;
+    var id = [[${ session.loginid.id }]];
+    var vo = [[${ soket_data }]];
+    var strmsg = null;
+    /* ]]> */
+    // 서버소켓에 연결
+    function connect() {
+      var socket = new SockJS('/ws');
+      stompClient = Stomp.over(socket);
+
+      stompClient.connect({}, function (frame) {
+        setConnected(true);
+        console.log('Connected: ' + frame);
+        stompClient.subscribe('/send', function (msg) {
+          $("#all").append(
+            "<h4>" + JSON.parse(msg.body).sendid + ":" +
+            JSON.parse(msg.body).content1
+            + "</h4>");
+        });
+        stompClient.subscribe('/send/' + id, function (msg) {
+          $("#me").append(
+            "<h4>" + JSON.parse(msg.body).sendid + ":" +
+            JSON.parse(msg.body).content1 + "<br><br>" +
+            JSON.parse(msg.body).content2
+            + "</h4>");
+        });
+        stompClient.subscribe('/send/tomsg/' + id, function (msg) {
+          $("#to").append(
+            "<h4>" + JSON.parse(msg.body).sendid + ":" +
+            JSON.parse(msg.body).content1
+            + "</h4>");
+        });
+        stompClient.subscribe('/send/serversend', function (msg) {
+          $("#servermsg1").text(JSON.parse(msg.body).content1);
+          $("#servermsg2").text(JSON.parse(msg.body).content2);
+        });
+      });
+    }
+    
+    // 서버소켓에 연결끊기
+    function disconnect() {
+      if (stompClient !== null) {
+        stompClient.disconnect();
+      }
+      setConnected(false);
+      console.log("Disconnected");
+    }
+
+    // connect&disconnect버턴 활성화/비활성화
+    function setConnected(connected) {
+      if (connected) {
+        $("#status").text("Connected");
+      } else {
+        $("#status").text("Disconnected");
+      }
+
+    }
+
+    // 서버에 메세지 요청 메서드
+    function sendTo() {
+
+      var msg = JSON.stringify({
+        'sendid': id,
+        'receiveid': vo.shop_mid,
+        'content1': strmsg
+      });
+      stompClient.send('/receivetomsg', {}, msg);
+    }
+    $(document).ready(function () {
+      $("#connect").click(function () {
+        connect();
+      });
+      $("#disconnect").click(function () {
+        disconnect();
+      });
+      $("#sendall").click(function () {
+        sendAll();
+      });
+      $("#sendme").click(function () {
+        sendMe();
+      });
+      $("#sendto").click(function () {
+        sendTo();
+      });
+    });
+
+
+    $(document).ready(function () {
+      connect();
+
+      strmsg = "" + vo.id + "__" + vo.shop_name + "__" + vo.uid + "__" + vo.addr + " : " 
+        + vo.addrd + "__" + vo.phon + "__" + vo.status + "__" 
+        + vo.date;
+
+      
+      
+      
+      alert('주문이 완료되었습니다.');
+      // sendTo();
+      location.href = '/';
+    });
+  </script>
+</head>
+
+
+<!-- ===============================================-->
+<!--    JavaScripts-->
+<!-- ===============================================-->
+<script src="/bootstrap/foodwagon/vendors/@popperjs/popper.min.js"></script>
+<script src="/bootstrap/foodwagon/vendors/bootstrap/bootstrap.min.js"></script>
+<script src="/bootstrap/foodwagon/vendors/is/is.min.js"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+<script src="/bootstrap/foodwagon/vendors/fontawesome/all.min.js"></script>
+<script src="/bootstrap/foodwagon/assets/js/theme.js"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400;600;700;900&amp;display=swap"
+  rel="stylesheet">
+</body>
+
+
+
+<body>
+	<!-- <H1 th:text="${session.loginid.id}">ID</H1> -->
+	<H1 id="status">Status</H1>
+	<H1 id="servermsg1">Server Msg1</H1>
+	<H1 id="servermsg2">Server Msg2</H1>
+	<button id="connect">Connect</button>
+	<button id="disconnect">Disconnect</button>
+
+	<h3>All</h3>
+	<input type="text" id="alltext"><button id="sendall">Send</button>
+	<div id="all"></div>
+
+	<h3>Me</h3>
+	<input type="text" id="metext"><button id="sendme">Send</button>
+	<div id="me"></div>
+
+	<h3>To</h3>
+	<input type="text" id="target">
+	<input type="text" id="totext"><button id="sendto">Send</button>
+	<div id="to"></div>
+
+</body>
+
+
+
+
+
+</html>

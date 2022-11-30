@@ -1,3 +1,8 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
+
 <script>
 
 
@@ -10,15 +15,21 @@ function check(){
 $(document).ready(function(){
 	
 	//Menu Buttons
+	$('#mypagebtn').click(function(){
+  		var uid = $('#uid_index').val();
+ 		location.href='/cust?uid='+uid;
+	});
 	$('#update').click(function(){
- 		location.href='/cust/update';
+  		var uid = $('#uid_index').val();
+ 		location.href='/cust/update?uid='+uid;
 	});
 	$('#myorders').click(function(){
- 		location.href='/cust/myorders';
+		var uid = $('#uid_index').val();
+ 		location.href='/cust/myorders?uid='+uid;
 	});
 	$('#cs').click(function(){
  		location.href='/cust/cs';
-	});	
+	})
 
 
 
@@ -26,7 +37,9 @@ $(document).ready(function(){
 </script>
 
 <section class="pb-5 pt-8">
-
+<h5 th:if="${session.loginid != null}">
+   <input type="hidden" id="uid_index" name="uid" th:value="${session.loginid.id}">           	
+</h5>
   <div class="container">
     <div class="row">
       <div class="col-12">
@@ -35,11 +48,11 @@ $(document).ready(function(){
             <div class="row justify-content-center">
             
              <div class="col-md-7 col-xl-5 col-xxl-4 p-4 p-lg-5">
-                <h1 class="card-title mt-xl-5 mb-4 text-center">My Page <a href="/cust"><span class="text-primary">마이페이지</span></a></h1>
+                <h1 style= " font-family: 'Jua', sans-serif; " class="card-title mt-xl-5 mb-4 text-center">My Page <a id="mypagebtn"><span style= "color: #ffa000; font-family: 'Jua', sans-serif; "  class="text-primary">마이페이지</span></a></h1>
                 <div class="d-grid bottom-0">                
-                <a class="btn btn-lg btn-primary mt-xl-6" id="update" href="/cust/update">회원정보수정하기</a><p></p>
-                <a class="btn btn-danger text-white mt-xl-6" id="myorders" href="/cust/myorders">주문내역조회 &nbsp<i class="fas fa-mouse-pointer me-2"></i></a><p></p>
-                <a class="btn btn-lg btn-primary mt-xl-6" id="cs" href="/cust/cs">고객센터</a><p></p>
+                <a style= " font-family: 'Jua', sans-serif; "  class="btn btn-lg btn-primary mt-xl-6" id="update">회원정보수정하기</a><p></p>
+                <a style= " font-family: 'Jua', sans-serif; "  class="btn btn-danger text-white mt-xl-6" id="myorders">주문내역조회 &nbsp<i class="fas fa-mouse-pointer me-2"></i></a><p></p>
+                <a style= "font-family: 'Jua', sans-serif; "  class="btn btn-lg btn-primary mt-xl-6" id="cs">고객센터</a><p></p>
                 </div>
               </div>
             
@@ -50,25 +63,28 @@ $(document).ready(function(){
 	                	<!-- 주문상세 Header -->
 					      <div class="modal-header">
 					      	<div class="ps-3">
-					          <h4 class="modal-title"><i class="fas fa-list"></i>&nbsp  &nbsp 주문상세</h4>					      	
+					          <h4 style= "color: #ffa000; font-family: 'Jua', sans-serif; "  class="modal-title"><i class="fas fa-list"></i>&nbsp  &nbsp 주문상세</h4>					      	
 					      	</div>
 					      </div>
 					
 					      <!-- 주문상세 정보 -->
 					      <div class="modal-body">	
-					      	<div class="p-3">	
+					      	<div  class="p-3">	
 
 	      						<!-- 주문정보 odinfo(order info) -->
-						      	<h5 class="text-primary" th:if = "${i.status}  == 1" th:text="배달완료"></h5>
-						      	<h5 class="text-gray" th:if = "${i.status}  == 0" th:text="주문취소"></h5>
-						      	<h5 class="text-dark" th:if = "${i.status}  == 2" th:text="배달중"></h5>						      	
+						      	<h5 style= "font-family: 'Jua', sans-serif; "  class="text-dark" th:if = "${i.status}  == 1" th:text="배달완료"></h5>
+						      	<h5 style= " font-family: 'Jua', sans-serif; "  class="text-gray" th:if = "${i.status}  == 0" th:text="주문취소"></h5>
+						      	<h5 style= " font-family: 'Jua', sans-serif; "  class="text-primary" th:if = "${i.status}  == 2" th:text="배달중"></h5>	
+						      	<h5 style= " font-family: 'Jua', sans-serif; "  class="text-primary" th:if = "${i.status} == 3" th:text="주문수락완료"></h5>
+						      	<h5 style= " font-family: 'Jua', sans-serif; "  class="text-primary" th:if = "${i.status} == 4" th:text="주문확인요청중"></h5>
+						      						      	
 						      	<h2 th:text="${i.sname}"></h2>
 								<h6 th:text="${'주문일시: '+#dates.format(i.odate,'yyyy년 MM월 dd일 HH시 mm분')}"></h6>
 								<h6 class="pb-2" th:text="${'주문번호: '+i.oid+'번'}"></h6>
 
 					      	</div>
 							<div class="pb-3 text-center">
-					        	<button type="button" class="btn btn-line text-dark"><i class="fas fa-home"></i>&nbsp 가게보기</button>
+					        	<a type="button" th:href="@{/shop/main(sid=${i.sid})}" class="btn btn-line text-dark"><i style= "color: #ffa000; font-family: 'Jua', sans-serif; "  class="fas fa-home"></i>&nbsp 가게보기</a>
 					        </div>
 						
 						
@@ -81,7 +97,7 @@ $(document).ready(function(){
 					             <table  th:each="m: ${m}"  width="100%" cellspacing="0">
 				                   <tbody>
 			                         <tr>
-		                               <td><h6 th:text="${m.mname}"></h6></td>	                              
+		                               <td><h6 th:text="${m.mname}+'('+${m.mnum}+')개'"></h6></td>	                              
 		                               <td align="right"></td>
 				                     </tr>
 				                     <tr >
@@ -112,12 +128,12 @@ $(document).ready(function(){
 								  <table width="100%" cellspacing="0">
 									  <tbody>
 									    <tr>
-									      <td><h6>총 주문금액</h6>   </td>
-									      <td><h6 align="right" th:text="${#numbers.formatInteger(ap.allprice, 0, 'COMMA')}+'원'"></h6>   </td>
+									      <td><h6 style= " font-family: 'Jua', sans-serif; " >총 주문금액</h6>   </td>
+									      <td><h6 align="right" th:text="${#numbers.formatInteger(ap, 0, 'COMMA')}+'원'"></h6>   </td>
 									    </tr>
 									    <tr>
-									      <td><h6>배달팁</h6>   </td>
-									      <td align="right"><h6>3000원</h6>   </td>
+									      <td><h6 style= " font-family: 'Jua', sans-serif; " >배달팁</h6>   </td>
+									      <td  align="right"><h6 >3000원</h6>   </td>
 									    </tr>								  
 									  </tbody>
 								  </table>
@@ -126,8 +142,8 @@ $(document).ready(function(){
 								  <table width="100%" cellspacing="0">
 									  <tbody>
 									    <tr>
-									      <td><h5>최종결제가격</h5></td>
-									      <td><h5 align="right" th:text="${#numbers.formatInteger(ap.allprice+3000, 0, 'COMMA')}+'원'"></h5></td>
+									      <td><h5 style= "color: #ffa000; font-family: 'Jua', sans-serif; " >최종결제가격</h5></td>
+									      <td><h5 align="right" th:text="${#numbers.formatInteger(ap+3000, 0, 'COMMA')}+'원'"></h5></td>
 									    </tr>
 									  </tbody>
 								  </table>

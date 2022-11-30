@@ -4,13 +4,22 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.foodject.mapper.UserOrdersMapper">
 	
+	<insert id="insert" parameterType="userordersVO">
+		INSERT INTO orders VALUES (NULL, #{uid}, #{sid}, #{addr}, #{addrd}, #{phon}, #{nick}, SYSDATE(), 4, #{ask})
+		 <selectKey keyColumn="" keyProperty="id" order="AFTER" resultType="Integer">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+
+	
 	<select id="selectod" parameterType="String" resultType="userordersmyVO">
 		SELECT DISTINCT o.id as oid, o.uid, o.status, o.date AS odate, s.name AS sname, s.logo AS slogo FROM orders o
 		JOIN shop s ON o.sid = s.id
-		WHERE o.uid=#{uid} ORDER BY o.date DESC
+		WHERE o.uid=#{uid} ORDER BY o.id DESC
 	</select>
 	<select id="selectodinfo" parameterType="int" resultType="userordersmyVO">
-		SELECT DISTINCT o.id as oid, o.uid, o.date AS odate, s.name AS sname, s.logo AS slogo, o.status FROM orders o
+		SELECT DISTINCT o.id as oid, o.uid, o.date AS odate, s.name AS sname, s.id as sid, s.logo AS slogo, o.status FROM orders o
 		JOIN shop s ON o.sid = s.id
 		WHERE o.id=#{oid}	
 	</select>
@@ -30,9 +39,10 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	
 	<select id="selectoddemenu" parameterType="int" resultType="userordersmyVO">
         select
-		id as deid, mnid as mid, mname, price as mprice, num as mnum
-		from detail
-		where id=#{deid}
+		de.id as deid, de.mnid as mid, de.mname, m.price as mprice, de.num as mnum
+		from detail de
+		join menu m on de.mnid = m.id
+		where de.id=#{deid}
 	</select>
 	
 	<select id="selectoddeopt" parameterType="int" resultType="userordersmyVO">
@@ -44,14 +54,11 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
         WHERE d.did=#{deid}        
 	</select>
 	
-	<select id="selectallprice"  parameterType="int" resultType="userordersmyVO">
-		select distinct o.id as oid, (select sum( num * price ) from detail group by odid having odid = o.id)
-		+  ( select IFNULL( sum(oprice), 0 ) from dopt dt left join detail d on d.id = dt.did where d.odid = o.id ) as allprice
-		from orders o 
-		left join detail d on o.id = d.odid
-		left join dopt dt on d.id = dt.did 
-		where o.id = #{oid}
-		order by o.id desc
+
+
+	<select id="selectallprice"  parameterType="int" resultType="int">
+		select sum(price) as allprice from detail        
+        where odid=#{oid};
 	</select>
 
 

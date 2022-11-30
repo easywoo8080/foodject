@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 
 import com.foodject.biz.HostManagerBiz;
 import com.foodject.biz.HostMenuBiz;
+import com.foodject.restapi.BcrytPassward;
 import com.foodject.vo.HostManagerVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,42 @@ public class HostMainAJAX {
 	
 	@Autowired
 	HostMenuBiz mnbiz;
-	
-	
+
+	@Autowired
+	BcrytPassward bp;
+
+	@RequestMapping("/login/checkpwdbphost")
+	public String checkpwdbphost(HttpSession session, String pwd) {
+		HostManagerVO vo = (HostManagerVO) session.getAttribute("loginshop");
+		String result = "";
+		HostManagerVO cust = null;
+		if(pwd.equals("") || pwd==null) {
+			return "1";
+		}
+		System.out.println("pwd : " +  pwd);
+		try {
+			cust = mngbiz.get(vo.getId());
+			if(cust==null && pwd.length()>4) {
+				result="0";
+			}else {
+				result="1";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println(cust.getPwd() + " :checkpwd: "  + pwd);
+		if(bp.checkPassward(cust.getPwd(), pwd)) {
+			System.out.println("비밀번호 일치");
+			result="0";
+		}else {
+			System.out.println("비밀번호 불일치");
+			result="1";
+		}
+
+		System.out.println("리턴 위" + result);
+		return result;
+	}
+
 	
 	@RequestMapping("mainNum")
 	public String mainNum(Model m, HttpSession session,  int cartid, int num) {

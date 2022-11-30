@@ -47,4 +47,7 @@ public class HostManagerBiz implements Biz<String, HostManagerVO> {
 	public void findpwd(HostManagerVO v) throws Exception {
 		dao.selectpwd(v);
 	}
+	public void modifypwd(HostManagerVO v) throws Exception {
+		dao.updatepwd(v);
+	}
 }

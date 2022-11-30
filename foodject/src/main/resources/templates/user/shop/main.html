@@ -1,37 +1,14 @@
 <meta charset="UTF-8">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
 <style>
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.pill-nav a {
-  display: block;
-  color: black;
-  padding: 14px;
-  text-decoration: none;
-  font-size: 17px;
-  border-radius: 5px;
-}
-
-.pill-nav a:hover {
-  background-color: #ddd;
-  color: black;
-}
-
-.pill-nav a.active {
-  background-color: dodgerblue;
-  color: white;
-}
-
-#collection{
-	/* offset-x | offset-y | blur-radius | spread-radius | color */
-	box-shadow: 2px 2px 20px 1px rgba(0, 0, 0, 0.1);
-	border-radius:5px;
-	margin:auto;
-}
-
-
-body {font-family: Arial, Helvetica, sans-serif;}
 
 /* The Modal (background) */
 .modal {
@@ -91,17 +68,15 @@ body {font-family: Arial, Helvetica, sans-serif;}
   cursor: pointer;
 }
 
-.modal-header {
-  padding: 2px 16px;
-  background-color: #5cb85c;
-  color: white;
-}
+
 
 .modal-body {padding: 2px 16px;}
 
 </style>
 
 <script>
+
+
 /* 장바구니로 이동 */
 function goCart(){
 	var uid = $('#uid_index').val();
@@ -113,13 +88,13 @@ function goCart(){
 
 /* 옵션 장바구니 추가 */
 function addOptcart(mnid){	
-	alert("Start addOptcart// mnid="+mnid)
+	//alert("Start addOptcart// mnid="+mnid)
 	$('#'+mnid+'option_form').attr({
 		'method':'post',
 		'action':'/shop/addOptcart'
 	});
 	$('#'+mnid+'option_form').submit();
-	alert("End addOptcart");
+	//alert("End addOptcart");
 }
 
 /* 메뉴 장바구니 추가 */
@@ -132,12 +107,29 @@ function addCart(uid,mnid,num,chk,sid){
 			if(data == "siderror"){
 				alert('장바구니에는 같은 가게의 메뉴만 담을 수 있습니다.');
 			}else{
-				alert('cartIn:'+data+' 메뉴가 장바구니에 정상적으로 등록되었습니다');
+				// alert('cartIn:'+data+' 메뉴가 장바구니에 정상적으로 등록되었습니다');
+				alert('장바구니에 정상적으로 등록되었습니다');
 				$('#'+mnid+'cartId').val(data);
 			}
 		}
 	});
 };
+
+function changeCnt(uid,sid){
+	$.ajax({
+		url:'/shop/main/changeCnt',
+		data:{'uid':uid, 'sid':sid},
+		// async: false,	//동기식으로 처리
+		success:function(data){
+			if(data == "error"){
+				console.log(data)
+			}else{
+				$('#cartCnt1').text('( '+data+' )')
+				$('#cartCnt2').text('( '+data+' )')
+			}
+		}
+	});
+}
 
 /* 주문서에 메뉴,옵션 추가 */
 function addOrderSheet(mnid){
@@ -147,6 +139,7 @@ function addOrderSheet(mnid){
 	var sid = $('#sid').val();
 	
 	addCart(uid,mnid,num,chk,sid);
+	changeCnt(uid,sid);
 	if(chk != 0){
 		addOptcart(mnid);
 	}
@@ -214,120 +207,198 @@ $(document).ready(function(){
 			'disabled':'true'
 		});
 	}
+
 });
 </script>
-<!-- <Modal> begin ==============================-->
-
-
-
-
-<!-- ============================================-->
-<!-- <section> begin ============================-->
-<section class="pb-5 pt-8">
-  <div class="container">
-    <div class="row">
-      <div class="col-12">
-        <div class="card card-span mb-3 shadow-lg">
-          <div class="card-body py-0">
-            <div class="row justify-content-center">
-              <div class="col-md-5 col-xl-7 col-xxl-8 g-0 order-0 order-md-1"><img class="img-fluid w-100 fit-cover h-100 rounded-top rounded-md-end rounded-md-top-0" src="/bootstrap/foodwagon/assets/img/gallery/crispy-sandwiches.png" alt="..." /></div>
-              <div class="col-md-7 col-xl-5 col-xxl-4 p-4 p-lg-5">
-                <h1 class="card-title mt-xl-5 mb-4" th:text="${shop.name}"> 음식점명 </h1>
-                <p class="fs-1" th:text="${shop.info}">가게 정보</p>
-                <input type="hidden" id="status" th:value="${shop.status}">
-                <div class="d-grid bottom-0" th:if="${session.loginid != null}"><button class="btn btn-lg btn-primary btn_disabled mt-xl-6" onclick="goCart();">주문하기<span th:text="'( '+${row}+' )'"></span><i class="fas fa-chevron-right ms-2"></i></button></div>
-                <div class="d-grid bottom-0" th:unless="${session.loginid != null}"><button class="btn btn-lg btn-primary btn_disabled mt-xl-6" onclick="goLogin();">주문하기<i class="fas fa-chevron-right ms-2"></i></button></div>
-              </div>
+     <section class="py-0 bg-primary-gradient">
+        <div class="container">
+          <div class="row justify-content-center g-0">
+            <div class="col-xl-9">          
+             
+	              <div class="col-lg-6 text-center mx-auto mt-4 pt-6 pb-2">              	
+	              	<div class="mx-auto mb-2 md-5 mt-4 pt-6" style= "width:170px;">
+	   				  <img id="imgviewer" class="img-fluid rounded-3 h-100" th:if="${shop.logo != null }" th:src="${'https://kr.object.ncloudstorage.com/foodject/shop/'+shop.logo}" alt="image" />
+	   				  <img id="imgviewer" class="img-fluid rounded-3 h-100" th:unless="${shop.logo != null }" src="https://kr.object.ncloudstorage.com/foodject/shop/logo1.jpg" alt="image" />
+	   				                	
+	              	</div>
+	                  <h2 style= "color: #ffa000; font-family: 'Jua', sans-serif; " th:text="${shop.name}"></h2>
+	                  <h6 style= "font-family: 'Jua', sans-serif; " th:text="${shop.info}">가게 정보</h6>
+	                  <span style= " font-family: 'Jua', sans-serif; " class="badge bg-soft-success"><span class="fw-bold fs-1 text-success">Open Now</span></span>
+	                  &nbsp<a id="heart" type="button"><i class='far fa-heart' style='font-size:18px'></i></a>
+	              </div>
+	              <div class="icon-group justify-content-center">  
+	               	  <table>
+	              	  	<tbody>
+	              	  	  <tr style= " font-family: 'Jua', sans-serif; ">
+	              	  	  	<td >최소주문금액</td>
+	              	  	  	<td>&nbsp&nbsp&nbsp&nbsp</td>
+	              	  	  	<td align="right" th:text="${#numbers.formatInteger(shop.allmin, 0, 'COMMA')}+'원'"></td>
+	              	  	  </tr>
+	              	  	  <tr style= " font-family: 'Jua', sans-serif; ">
+	              	  	    <td>배달팁</td>
+	              	  	    <td>&nbsp&nbsp&nbsp&nbsp</td>
+	              	  	  	<td align="right">3,000원</td>           	  	  
+	              	  	  </tr>
+	              	  	</tbody>
+	              	  </table>                            	
+	             </div>             
+	             <input type="hidden" id="status" th:value="${shop.status}">
+	             <div class="icon-group1 justify-content-center pt-2">
+	                <div th:if="${session.loginid != null}">
+	                	<button style= "font-family: 'Jua', sans-serif; " class="btn btn-primary btn_disabled" onclick="goCart();">주문하기
+	                	<span id="cartCnt1" th:text="'( '+${row}+' )'"></span><i class="fas fa-chevron-right ms-2"></i>
+	                	</button>
+	                </div>
+	             	<div  th:unless="${session.loginid != null}">
+	             		<button class="btn btn-primary btn_disabled" onclick="goLogin();">주문하기
+	             		<i class="fas fa-chevron-right ms-2"></i>
+	             		</button>
+	             	</div>             	             	
+	             </div>
+	             <hr>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- end of .container-->
-</section>
-<!-- <section> close ============================-->
-<!-- ============================================-->
-<div id="collection" class="col-10 col-sm-10 col-md-4 col-lg-4 col-xl-4 pill-nav" >
-  <a th:href="'#c'+${c.id}" th:each="c:${clist}" th:text="${c.name}">collection</a>
-</div>
+        </div><!-- end of .container-->
+
+      </section>
 
 <!-- ============================================-->
-<!-- <section> begin ============================-->
-<section class="py-4 overflow-hidden">
-  <div class="container">
-    <div class="row h-100" th:each="c:${clist}">
-      <div class="col-lg-7 mx-auto text-center mt-7 mb-5">
-        <h5 class="fw-bold fs-3 fs-lg-5 lh-sm" th:text="${c.name}" th:id="'c'+${c.id}">Collection name</h5>
-      </div>
-      <div class="col-12">
-        <div class="carousel slide" id="carouselPopularItems" data-bs-touch="false" data-bs-interval="false">
-          <div class="carousel-inner">
-            <div class="carousel-item active" data-bs-interval="10000">
-              <div class="row gx-3 h-100 align-items-center">
-                <div class="col-4 col-sm-4 col-md-4 col-lg-3 col-xl-2 mb-5 h-100" th:each="mn:${mlist}" th:if="${mn.collid == c.id}">
-                  <div class="card card-span h-100 rounded-3">
-                  	<!-- 메뉴 이미지 -->
-                  	<img class="img-fluid rounded-3 h-100" th:if="${mn.img != null }" 
-						th:src="'https://kr.object.ncloudstorage.com/foodject/menu/'+${mn.img}" alt="error1" />
-					<img class="img-fluid rounded-3 h-100" th:unless="${mn.img != null }" 
-						src="https://kr.object.ncloudstorage.com/foodject/menu/default.jpg" alt="error2" />
-                    <div class="card-body ps-0">
-                      <h5 class="fw-bold text-1000 text-truncate mb-1" th:text="${mn.name}">메뉴 이름</h5>
-                      <span class="text-1000 fw-bold" th:text="'￦ '+${mn.price}">가격</span>
+        <div class="container pt-3 pb-5">
+              <div class="card w-xxl-100">
+                <div class="card-body">
+                  <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                      <button class="nav-link active mb-3" type="button"><i class="fas fa-hamburger me-2"></i></button>
+                      <a style= "color: #ffa000; font-family: 'Jua', sans-serif; "
+                      class="nav-link mb-3" 
+                      type="button"                    
+                      th:href="'#c'+${c.id}" th:each="c:${clist}" th:text="${c.name}">
+                      </a>
+                      
                     </div>
-                  </div>
-                  <div class="d-grid gap-2"><button th:onclick="openModal([[${mn.id}]]);" class="btn btn-primary btn_disabled">주문</button></div>
+                  </nav>
                   
-                  	<!-- The Modal -->
-					<div th:if="${session.loginid != null}" th:id="'m'+${mn.id}" class="modal">
-					
-					  <!-- Modal content -->
-					  <div class="modal-content">
-					    <div class="modal-header">
-					    <span class="close" th:onclick="closeModal([[${mn.id}]]);">&times;</span>
-					      <h2>옵션</h2>
-					    </div>
-					    <div class="modal-body">
-					      <br>
-					      <!-- 메뉴 이미지 -->
-					      <div class="menu_modal_img">
-		                  	<img class="img-fluid rounded-3 h-100" th:if="${mn.img != null }" 
-								th:src="'https://kr.object.ncloudstorage.com/foodject/menu/'+${mn.img}" alt="error1" />
-							<img class="img-fluid rounded-3 h-100" th:unless="${mn.img != null }" 
-								src="https://kr.object.ncloudstorage.com/foodject/menu/default.jpg" alt="error2" />
-						  </div>	
-					      <input type="hidden" th:value="${mn.id}" id="mnid">
-					      <input type="hidden" th:value="${session.loginid.id}" id="uid">
-					      <h5>주문 수량 : <input type="number" th:id="${mn.id}+'num'" class="number_num col-2" value="1" min="1"></h5><br>
-					      
-					      <form th:id="${mn.id}+'option_form'">
-					      	<input type="hidden" id="sid" name="sid" th:value="${sid}">
-					      	<input type="hidden" th:id="${mn.id}+'cartId'" name="cartId" value="100" >
-					      	<h5 th:each="o:${olist}"><input type="checkbox" name="option" th:if="${o.mnid == mn.id}" th:text="' '+${o.name}" th:value="${o.id}"></h5><br>
-					      </form>
-					    </div>
-					    <div class="modal-footer">
-					      <div class="modal-footer">
-					        <button type="button" class="btn btn-danger" th:id="${mn.id}+'_closebtn'" th:onclick="addOrderSheet([[${mn.id}]]);">담기</button>
-					      </div>
-					    </div>
-					  </div>
-                  	</div>
-                  	<div th:unless="${session.loginid != null}">
-                  		<input type="hidden" value="0" id="uid">
-                  	</div>
-                  	<form id="url">
-                  		<input type="hidden" name="prevUrl" id="prevUrl">
-                  	</form>
+                  <div class="tab-content mt-3" id="nav-tabContent">
+                        <div class="col">                      
+							<section class="py-4 overflow-hidden">
+							  <div class="container">
+							    <div class="row h-100" th:each="c:${clist}">
+							      <div class="col-lg-7 mx-auto text-center mt-1 mb-5">
+							        <h5 style= "color: #ffa000; font-family: 'Jua', sans-serif; " class="fw-bold fs-3 fs-lg-5 lh-sm" th:text="${c.name}" th:id="'c'+${c.id}">Collection name</h5>
+							      </div>
+							      <div class="col-12">
+							        <div class="carousel slide" id="carouselPopularItems" data-bs-touch="false" data-bs-interval="false">
+							          <div class="carousel-inner">
+							            <div class="carousel-item active" data-bs-interval="10000">
+							              <div class="row gx-3 h-100 align-items-center">
+							                <div class="col-4 col-sm-4 col-md-4 col-lg-3 col-xl-2 mb-5 h-100" th:each="mn:${mlist}" th:if="${mn.collid == c.id}">
+							                  
+							                  <!-- 메뉴 이미지 -->	
+							                  <button class="btn2 btn-noline" th:onclick="openModal([[${mn.id}]]);">						                  
+							                  <div class="card card-span h-100 rounded-3">
+							                  <div style="width:100px; height:100px;">
+							                  	<img class="img-fluid rounded-3 h-100" th:if="${mn.img != null }" 
+													th:src="'https://kr.object.ncloudstorage.com/foodject/menu/'+${mn.img}" alt="error1" />
+												<img class="img-fluid rounded-3 h-100" th:unless="${mn.img != null }" 
+													src="https://kr.object.ncloudstorage.com/foodject/menu/default.jpg" alt="error2" />							                  
+							                  </div>
+							                    <div class="card-body ps-0">
+							                      <h5 style= "color: #ffa000; font-family: 'Jua', sans-serif; " th:text="${mn.name}">메뉴명</h5>
+							                      <span style= " font-family: 'Jua', sans-serif; " class="text-1000" th:text="${#numbers.formatInteger(mn.price, 0, 'COMMA')}+'원'">가격</span>
+							                    </div>							                  
+							                  
+							                  </div>
+							                  </button>							                 
+
+							                  	<!-- The Modal -->
+												<div th:if="${session.loginid != null}" th:id="'m'+${mn.id}" class="modal">
+												
+												  <!-- Modal -->
+
+												  <!-- Modal content -->
+												 <div class="modal-dialog modal-sm">
+												  <div class="modal-content">
+												    <div class="modal-header">
+												      <h5 style= "color: #ffa000; font-family: 'Jua', sans-serif; " class="modal-title" th:text="${mn.name}+'&nbsp옵션선택'"></h5>												      
+												      <button type="button" class="btn-close" th:onclick="closeModal([[${mn.id}]]);"></button>
+												    </div>
+												    
+												    <div class="modal-body">
+												      <!-- 메뉴 이미지 -->
+												      <div class="justify-content-center">
+													    <div class="menu_modal_img mb-2">
+									                  	<img class="img-fluid rounded-3 h-100" th:if="${mn.img != null }" 
+															th:src="'https://kr.object.ncloudstorage.com/foodject/menu/'+${mn.img}" alt="error1" />
+														<img class="img-fluid rounded-3 h-100" th:unless="${mn.img != null }" 
+															src="https://kr.object.ncloudstorage.com/foodject/menu/default.jpg" alt="error2" />
+													    </div>													 
+												      </div>
+												      <h6 style= " font-family: 'Jua', sans-serif; " class="text-center mt-2" th:text="${#numbers.formatInteger(mn.price, 0, 'COMMA')}+'원'"></h6>	
+	
+												      <!-- 메뉴 옵션선택 -->
+												      <input type="hidden" th:value="${mn.id}" id="mnid">
+												      <input type="hidden" th:value="${session.loginid.id}" id="uid">
+												      												      
+												      <form th:id="${mn.id}+'option_form'">
+												      	<input type="hidden" id="sid" name="sid" th:value="${sid}">
+												      	<input type="hidden" th:id="${mn.id}+'cartId'" name="cartId" value="100" >
+												      	<p th:each="o:${olist}"><input type="checkbox" name="option" th:if="${o.mnid == mn.id}" th:text="' '+${o.name}+'&nbsp('+${#numbers.formatInteger(o.price, 0, 'COMMA')}+'원'+')'" th:value="${o.id}"></p><br>
+												      </form>
+												      
+												      <h6 style= "color: #ffa000; font-family: 'Jua', sans-serif; ">주문 수량 : &nbsp<input type="number" th:id="${mn.id}+'num'" class="col-2" value="1" min="1"></h6><br>
+												     
+												      
+												    </div>
+												    <div class="modal-footer">
+												        <button style= " font-family: 'Jua', sans-serif; " type="button" class="btn btn-line text-dark" th:id="${mn.id}+'_closebtn'" th:onclick="addOrderSheet([[${mn.id}]]);">담기</button>
+												    </div>
+												  </div>
+												  </div>
+												  
+
+												  
+							                  	</div>
+
+							                  	<div th:unless="${session.loginid != null}">
+							                  		<input type="hidden" value="0" id="uid">
+							                  	</div>
+							                  	<form id="url">
+							                  		<input type="hidden" name="prevUrl" id="prevUrl">
+							                  	</form>
+							                </div>
+							              </div>
+							            </div>
+							          </div>
+							        </div>
+							      </div>
+							      
+							      <hr>
+							    </div>
+					             <div class="icon-group1 justify-content-center pt-2">
+					                <div th:if="${session.loginid != null}">
+					                	<button style= " font-family: 'Jua', sans-serif; " class="btn btn-primary btn_disabled" onclick="goCart();">주문하기
+					                	<span id="cartCnt2" th:text="'( '+${row}+' )'"></span><i class="fas fa-chevron-right ms-2"></i>
+					                	</button>
+					                </div>
+					             	<div  th:unless="${session.loginid != null}">
+					             		<button style= " font-family: 'Jua', sans-serif; " class="btn btn-primary btn_disabled" onclick="goLogin();">주문하기
+					             		<i class="fas fa-chevron-right ms-2"></i>
+					             		</button>
+					             	</div>             	             	
+					             </div>
+							  </div><!-- end of .container-->
+							</section>
+
+                        </div>
+                  </div>                  
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div><!-- end of .container-->
-</section>
+         </div>
+<!-- ============================================-->
+
+
+<!-- ============================================-->
+<!-- <section> begin ============================-->
+
 <!-- <section> close ============================-->
 <!-- ============================================-->

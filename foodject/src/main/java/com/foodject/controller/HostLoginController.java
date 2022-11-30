@@ -23,19 +23,10 @@ public class HostLoginController {
 
 	@Autowired
 	BcrytPassward bp;
+
 	
-	public void mainProduct(Model m) {
-//		List<ProductVO> plist = null;
-//		String pimgpath = Paths.get(System.getProperty("user.dir"), "src", "main","resources","static","img", "product_img").toString();
-//		System.out.println("imgpath : " +  pimgpath);
-//		try {	
-//			plist = mainbiz.get();
-//			m.addAttribute("plist", plist);
-//			m.addAttribute("imgpath", pimgpath);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-	}
+	
+
 
 	@RequestMapping("")
 	public ModelAndView main(ModelAndView mv, String msg) {
@@ -53,9 +44,7 @@ public class HostLoginController {
 		HostManagerVO manager = null;
 		try {
 			
-			manager = biz.get(id);
-			
-			
+			manager = biz.get(id);			
 			if(manager == null) {
 				
 				throw new Exception("아이디가 존재하지 않습니다.");
@@ -67,7 +56,9 @@ public class HostLoginController {
 			// }else {
 			// 	throw new Exception("비밀번호가 틀립니다.");
 			// }
-			if (manager.getPwd().equals(pwd)) {
+
+			// 비밀번호 암호화 체크 처리
+			if (bp.checkPassward(manager.getPwd(), pwd)) {
 				session.setAttribute("loginshop", manager);
 				
 			}else {
@@ -83,7 +74,7 @@ public class HostLoginController {
 			}
 			return "redirect:/host/login?msg=" + msg; //? 뒤에값을 서버프로그램에 전송한다
 		}
-		return "host/index";
+		return "redirect:/host/";
 	}
 	@RequestMapping("/logout")
 	public String logout(Model m, HttpSession session) {

@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="ko">
 
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 
 <head>
   <!-- Required meta tags -->
@@ -38,7 +40,7 @@ $(document).ready(function(){
 	$('#pwdc2').click(function(){
 		 var chpwd1 = $('#chpwd1').val();
 		 var chpwd2 = $('#chpwd2').val();
-		
+		 
 		
 		 if( chpwd1 == ''){
 				alert("비밀번호를 입력하세요.");	
@@ -52,11 +54,11 @@ $(document).ready(function(){
 		if( chpwd1 == chpwd2){
 			var c = confirm('수정 하시겠습니까?')
 			if(c == true){
-				$('#update_form2').attr({
+				$('#update2_form').attr({
 					'method':'post',
 					'action':'update2'
 				}); 
-				$('#update_form2').submit(); 
+				$('#update2_form').submit(); 
 			}
 		}
 		
@@ -77,13 +79,18 @@ $(document).ready(function(){
           <div class="col-lg-4 mx-auto">
             <div class="auth-form-light text-left py-5 px-4 px-sm-5">
               <div class="brand-logo">
-                <a href="/host"><img src="/bootstrap/skydash/images/logo.svg" alt="logo"></a>
+                <a href="/host"><img src="/bootstrap/foodwagon/assets/img/gallery/logo.svg" alt="logo"></a>
               </div>
-              <h4>비밀번호 변경</h4>
-              <h6 class="font-weight-light"  >바꾸실 비밀번호를 입력하세요.</h6>
+              <h2 style= "color: #ffa000; font-family: 'Jua', sans-serif; ">비밀번호 변경</h2>
+              <p class="font-weight-light"  >바꾸실 비밀번호를 입력하세요.</p>
             
                <form class="pt-3" id="update2_form">
-                
+                <div class="form-group" hidden="hidden">
+                <label for="id">아이디:</label>
+                <span id="ispan"></span>
+                  <input type="text" class="form-control form-control-lg" id="id" placeholder="ID" name="id"  value="mid01" th:value=${m.id} readonly="readonly">
+                </div>
+               
                 <div class="form-group">
                 <label for="chpwd1">비밀번호:</label>
                   <input type="password" class="form-control form-control-lg" id="chpwd1" placeholder="Enter Password" name="chpwd1">
@@ -97,16 +104,13 @@ $(document).ready(function(){
                 
                
                 <div class="mt-3">
-                  <button id="pwdc2" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">비밀번호 수정</button>
+                  <button id="pwdc2" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" style= " font-family: 'Jua', sans-serif; ">비밀번호 수정</button>
                 </div>
                 
                 <div class="mb-2">
                   
                 </div>
-                <div class="text-center mt-4 font-weight-light">
-                 비밀번호가 기억나지 않으세요?   <br>
-                  <a href="/host/findpwd" class="text-primary">비밀번호가 찾기</a>
-                </div>
+                
               </form>
             </div>
           </div>

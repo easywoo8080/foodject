@@ -13,33 +13,66 @@
   <!-- endinject -->
   <!-- Plugin css for this page -->
   <link rel="stylesheet" href="/bootstrap/skydash/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
-  <link rel="stylesheet" href="/bootstrap/skydash/vendors/ti-icons/css/themify-icons.css">
   <link rel="stylesheet" type="text/css" href="/bootstrap/skydash/js/select.dataTables.min.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+  
   <!-- End plugin css for this page -->
   <!-- inject:css -->
   <link rel="stylesheet" href="/bootstrap/skydash/css/vertical-layout-light/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="/bootstrap/skydash/images/favicon.png" />
+  <link href="/bootstrap/foodwagon/assets/css/theme.css" rel="stylesheet" />
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
+  <script type="text/javascript" th:src="'//dapi.kakao.com/v2/maps/sdk.js?appkey=' + ${kakaosrc} + '&libraries=services'"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+	<script src="/bootstrap/skydash/js/chart.js"></script>
+  
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="/webjars/sockjs-client/sockjs.min.js"></script>
+	<script src="/webjars/stomp-websocket/stomp.min.js"></script>
   <!-- style -->
   <style type="text/css">
     a:link {  text-decoration: none }
     a:visited {  text-decoration: none}
     a:hover {  text-decoration: underline}
-   
-  </style>
-  <!-- endinject -->
-  <link rel="shortcut icon" href="/bootstrap/skydash/images/favicon.png" />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-  <script type="text/javascript" th:src="'//dapi.kakao.com/v2/maps/sdk.js?appkey=' + ${kakaosrc} + '&libraries=services'"></script>
-  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-	<script src="/bootstrap/skydash/js/chart.js"></script>
 
+  .icon-bell{
+    color : #ffa000;
+  }
+
+  #loginname{
+    color : #ffa000;
+  }
+  #navbar-search-icon{
+    color : #ffa000;
+  }
+  .icon-menu{
+    color : #ffa000;
+  }
+  .icon-ellipsis{
+    color : #ffa000;
+  }
+  </style>
   <script th:inline="javascript">
 		/*<![CDATA[*/
     var id = [[${ session.loginshop }]];
     if( id == null ){
       location.href = "/host/login"
     }
+    function locateHref(href){
+      location.href = href;
+    }
+
+    $(document).ready(function(){
+
+    });
 	</script>
 
 </head>
@@ -48,8 +81,8 @@
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <a class="navbar-brand brand-logo mr-5" href="/host"><img src="/bootstrap/skydash/images/logo.svg" class="mr-2" alt="logo"/></a>
-        <a class="navbar-brand brand-logo-mini" href="/host"><img src="/bootstrap/skydash/images/logo-mini.svg" alt="logo"/></a>
+        <a class="navbar-brand brand-logo mr-5" href="/host"><img src="/bootstrap/foodwagon/assets/img/gallery/logo.svg" class="mr-2" alt="logo"/><span class="text-1000 fs-3 fw-bold ms-2 text-gradient">Foodject</span></a>
+        <a class="navbar-brand brand-logo-mini" href="/host"><img src="/bootstrap/foodwagon/assets/img/gallery/logo.svg" alt="logo"/></a>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
         <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
@@ -63,54 +96,56 @@
                   <i class="icon-search"></i>
                 </span>
               </div>
-              <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
+             <div class="input-group-icon pe-2"><i class="fas fa-search input-box-icon text-primary"></i>
+                <input class="form-control border-0 input-box bg-100" type="search" placeholder=" 무엇을 찾으시나요?" aria-label="Search" />
+              </div>  
             </div>
           </li>
         </ul>
-        <ul class="navbar-nav navbar-nav-right">
+        <ul style= "color: #ffa000; font-family: 'Jua', sans-serif; " class="navbar-nav navbar-nav-right">
           <li class="nav-item dropdown">
             <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
               <i class="icon-bell mx-0"></i>
               <span class="count"></span>
             </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
-              <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
-              <a class="dropdown-item preview-item">
+            <div  class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+              <p class="mb-0 font-weight-normal float-left dropdown-header" >주의사항</p>
+              <a th:href="@{/host/orders}" class="dropdown-item preview-item">
                 <div class="preview-thumbnail">
                   <div class="preview-icon bg-success">
                     <i class="ti-info-alt mx-0"></i>
                   </div>
                 </div>
                 <div class="preview-item-content">
-                  <h6 class="preview-subject font-weight-normal">Application Error</h6>
+                  <h6 style= "color: #ffa000; font-family: 'Jua', sans-serif; " class="preview-subject font-weight-normal">주문정보</h6>
                   <p class="font-weight-light small-text mb-0 text-muted">
-                    Just now
+                    주문관리
                   </p>
                 </div>
               </a>
-              <a class="dropdown-item preview-item">
+              <a th:href="@{/host/mypage}" class="dropdown-item preview-item" >
                 <div class="preview-thumbnail">
                   <div class="preview-icon bg-warning">
                     <i class="ti-settings mx-0"></i>
                   </div>
                 </div>
                 <div class="preview-item-content">
-                  <h6 class="preview-subject font-weight-normal">Settings</h6>
+                  <h6 style= "color: #ffa000; font-family: 'Jua', sans-serif; " class="preview-subject font-weight-normal">환경설정</h6>
                   <p class="font-weight-light small-text mb-0 text-muted">
-                    Private message
+                   정보수정
                   </p>
                 </div>
               </a>
-              <a class="dropdown-item preview-item">
+              <a th:href="@{/host/menu/setting}" class="dropdown-item preview-item">
                 <div class="preview-thumbnail">
                   <div class="preview-icon bg-info">
                     <i class="ti-user mx-0"></i>
                   </div>
                 </div>
                 <div class="preview-item-content">
-                  <h6 class="preview-subject font-weight-normal">New user registration</h6>
+                  <h6 style= "color: #ffa000; font-family: 'Jua', sans-serif; " class="preview-subject font-weight-normal">메뉴정보</h6>
                   <p class="font-weight-light small-text mb-0 text-muted">
-                    2 days ago
+                    메뉴관리
                   </p>
                 </div>
               </a>
@@ -121,16 +156,16 @@
           </li>
           <li class="nav-item nav-profile dropdown" th:unless="${session.loginshop == null}">	
             <a class="nav-link dropdown-toggle" th:href="login" data-toggle="dropdown" id="profileDropdown">
-              <span th:text="${session.loginshop.name}"></span>
+              <span id="loginname" th:text="${session.loginshop.name}"></span>
             </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-              <a class="dropdown-item">
+            <div style= "color: #ffa000; font-family: 'Jua', sans-serif; " class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+              <a  class="dropdown-item" th:href="@{/host/mypage}">
                 <i class="ti-settings text-primary"></i>
-                Settings
+                개인정보
               </a>
               <a class="dropdown-item" th:href="@{/host/login/logout}">
                 <i class="ti-power-off text-primary"></i>
-                Logout
+                로그아웃
               </a>
             </div>
           </li>
@@ -321,11 +356,11 @@
 
       <!-- 왼쪽 메뉴 바 -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
-        <ul class="nav">
+        <ul style= "font-family: 'Jua', sans-serif; " class="nav" id="dasul">
           <li class="nav-item">
-            <a class="nav-link" href="/test">
+            <a class="nav-link" href="#" onclick="locateHref('/host')">
               <i class="icon-grid menu-icon"></i>
-              <span class="menu-title">Dashboard</span>
+              <span class="menu-title">대쉬보드</span>
             </a>
           </li>
 
@@ -337,9 +372,9 @@
             </a>
             <div class="collapse" id="ui-basic">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="/host/shop">가게 목록 조회</a></li>
+                <li class="nav-item"> <a class="nav-link" onclick="locateHref('/host/shop')"  href="#">가게 목록 조회</a></li>
                
-                <li class="nav-item"> <a class="nav-link" href="/host/shop/analysis">매출 전표</a></li>
+                <li class="nav-item"> <a class="nav-link" onclick="locateHref('/host/shop/analysis')"  href="#">매출 전표</a></li>
               </ul>
             </div>
           </li>
@@ -352,8 +387,8 @@
             </a>
             <div class="collapse" id="form-elements">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"><a class="nav-link" href="/host/orders">들어온 주문</a></li>
-                <li class="nav-item"><a class="nav-link" href="/host/orders/list">배달 완료된 주문</a></li>
+                <li class="nav-item"><a class="nav-link" onclick="locateHref('/host/orders')" href="#">들어온 주문</a></li>
+                <!-- <li class="nav-item"><a class="nav-link" onclick="locateHref('/host/orders/list')" href="#">배달 완료된 주문</a></li> -->
               </ul>
             </div>
           </li>
@@ -365,8 +400,8 @@
             </a>
             <div class="collapse" id="tables">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="/host/menu/collection">컬렉션 관리</a></li>
-                <li class="nav-item"> <a class="nav-link" href="/host/menu/setting">메뉴 관리</a></li>
+                
+                <li class="nav-item"> <a class="nav-link" onclick="locateHref('/host/menu/setting')" href="#">메뉴 관리</a></li>
               </ul>
             </div>
           </li>
@@ -374,34 +409,22 @@
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
               <i class="icon-head menu-icon"></i>
-              <span class="menu-title">My Page</span>
+              <span class="menu-title">개인정보 관리</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="auth">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item" th:if="${session.loginshop == null}"> 
-                <a class="nav-link" href="/host/login"> Login</a></li>
+                <a class="nav-link" href="/host/login"> 로그인</a></li>
                 <li class="nav-item" th:if="${session.loginshop == null}"> 
-                <a class="nav-link" href="/host/register"> Register </a></li>
+                <a class="nav-link" href="/host/register"> 회원가입 </a></li>
               	<li class="nav-item" th:unless="${session.loginshop == null}"> 
-                <a class="nav-link" href="/host/mypage">My Information</a></li>
+                <a class="nav-link" onclick="locateHref('/host/mypage')">내 정보</a></li>
               
               </ul>
             </div>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">
-              <i class="icon-ban menu-icon"></i>
-              <span class="menu-title">리뷰 관리</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="error">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="/bootstrap/skydash/pages/samples/error-404.html"> FAQ </a></li>
-                <li class="nav-item"> <a class="nav-link" href='/host/info'> ChatBot </a></li>
-              </ul>
-            </div>
-          </li>
+        
          <li class="nav-item">
             <a class="nav-link" href="/host/info">
               <i class="icon-paper menu-icon"></i>
@@ -424,11 +447,11 @@
         <!-- partial:partials/_footer.html -->
         <footer class="footer">
           <div class="d-sm-flex justify-content-center justify-content-sm-between">
-            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.  Premium <a href="/bootstrap/skydash/https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.  Premium <a href="/bootstrap/skydash/https://www.bootstrapdash.com/" target="_blank" style= "color: #ffa000;">Foodject</a> 음식스 All rights reserved.</span>
             <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
           </div>
           <div class="d-sm-flex justify-content-center justify-content-sm-between">
-            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Distributed by <a href="/bootstrap/skydash/https://www.themewagon.com/" target="_blank">Themewagon</a></span> 
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Distributed by <a href="/bootstrap/skydash/https://www.themewagon.com/" target="_blank" style= "color: #ffa000;">Foodject</a></span> 
           </div>
         </footer> 
         <!-- partial -->

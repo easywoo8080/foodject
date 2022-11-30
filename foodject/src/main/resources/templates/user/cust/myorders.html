@@ -1,40 +1,33 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
 <script>
-
-//function myordersde (oid){
-
-//	$('#send'+oid).attr({
-//		'method':'post',
-//		'action':'/cust/oidimpl'
-//	});
-//	$('#send'+oid).submit();	
-
-//	alert(oid);
-//	location.href="/cust/myordersde?oid="+oid;
-// };
-
-
-
-
 $(document).ready(function(){
-
-	
 	//Menu Buttons
+	$('#mypagebtn').click(function(){
+  		var uid = $('#uid_index').val();
+ 		location.href='/cust?uid='+uid;
+	});
 	$('#update').click(function(){
- 		location.href='/cust/update';
+  		var uid = $('#uid_index').val();
+ 		location.href='/cust/update?uid='+uid;
 	});
 	$('#myorders').click(function(){
- 		location.href='/cust/myorders';
+		var uid = $('#uid_index').val();
+ 		location.href='/cust/myorders?uid='+uid;
 	});
 	$('#cs').click(function(){
  		location.href='/cust/cs';
-	});	
-
+	})
 });
 
 </script>
 
 <section class="pb-5 pt-8">
-
+<h5 th:if="${session.loginid != null}">
+   <input type="hidden" id="uid_index" name="uid" th:value="${session.loginid.id}">           	
+</h5>
   <div class="container">
     <div class="row">
       <div class="col-12">
@@ -43,18 +36,17 @@ $(document).ready(function(){
             <div class="row justify-content-center">
             
              <div class="col-md-7 col-xl-5 col-xxl-4 p-4 p-lg-5">
-                <h1 class="card-title mt-xl-5 mb-4 text-center">My Page <a href="/cust"><span class="text-primary">마이페이지</span></a></h1>
+                <h1 style= " font-family: 'Jua', sans-serif; " class="card-title mt-xl-5 mb-4 text-center">My Page <a id="mypagebtn"><span style= "color: #ffa000; font-family: 'Jua', sans-serif; " class="text-primary">마이페이지</span></a></h1>
                 <div class="d-grid bottom-0">                
-                <a class="btn btn-lg btn-primary mt-xl-6" id="update" href="/cust/update">회원정보수정하기</a><p></p>
-                <a class="btn btn-danger text-white mt-xl-6" id="myorders" href="/cust/myorders">주문내역조회 &nbsp<i class="fas fa-mouse-pointer me-2"></i></a><p></p>
-                <a class="btn btn-lg btn-primary mt-xl-6" id="cs" href="/cust/cs">고객센터</a><p></p>
+                <a style= " font-family: 'Jua', sans-serif; " class="btn btn-lg btn-primary mt-xl-6" id="update">회원정보수정하기</a><p></p>
+                <a style= " font-family: 'Jua', sans-serif; " class="btn btn-danger text-white mt-xl-6" id="myorders">주문내역조회 &nbsp<i class="fas fa-mouse-pointer me-2"></i></a><p></p>
+                <a style= " font-family: 'Jua', sans-serif; " class="btn btn-lg btn-primary mt-xl-6" id="cs">고객센터</a><p></p>
                 </div>
               </div>
             
               <div class="col-md-5 col-xl-7 col-xxl-8 g-0 order-0 order-md-1">
-                <h1 class="card-title mt-xl-5 mb-4 text-center">주문내역조회</h1>
                 
-              	<div >
+              	<div class="pt-6">
               	  <div th:if="${count} == 0"  class="px-6 pb-5">
               		<div class="card w-xxl-100">
                 	  <div class="card-body">
@@ -78,18 +70,18 @@ $(document).ready(function(){
 		                        <img class="img-fluid rounded-3 w-100" th:if="${o.slogo != null }" th:src="${'https://kr.object.ncloudstorage.com/foodject/shop/'+o.slogo}" alt="image" />
 								<img class="img-fluid rounded-3 w-100" th:unless="${o.slogo != null }" src="https://kr.object.ncloudstorage.com/foodject/shop/logo1.jpg" alt="image" />
 		                      </div>
-		                      <div class="col-md-10 p-3">
-		                      	<p th:text="${#dates.format(o.odate,'yyyy-MM-dd')}"></p>
+		                      <div  class="col-md-10 p-3">
+		                      	<p style= "color: #ffa000; font-family: 'Jua', sans-serif; " th:text="${#dates.format(o.odate,'yyyy-MM-dd')}"></p>
 		                      		      	
-						      	<h6 class="text-dark" th:if = "${o.status} == 1" th:text="배달완료"></h6>
-						      	<h6 class="text-gray" th:if = "${o.status} == 0" th:text="주문취소"></h6>
-						      	<h6 class="text-primary" th:if = "${o.status} == 2" th:text="배달중"></h6>
-						      	<h6 class="text-primary" th:if = "${o.status} == 3" th:text="주문수락완료"></h6>
-						      	<h6 class="text-primary" th:if = "${o.status} == 4" th:text="주문확인요청중"></h6>
+						      	<h6 style= "color: #ffa000; font-family: 'Jua', sans-serif; " class="text-dark" th:if = "${o.status} == 1" th:text="배달완료"></h6>
+						      	<h6 style= "color: #ffa000; font-family: 'Jua', sans-serif; " class="text-gray" th:if = "${o.status} == 0" th:text="주문취소"></h6>
+						      	<h6 style= "color: #ff6d00; font-family: 'Jua', sans-serif; " class="text-primary" th:if = "${o.status} == 2" th:text="배달중"></h6>
+						      	<h6 style= "color: #ffa000; font-family: 'Jua', sans-serif; " class="text-primary" th:if = "${o.status} == 3" th:text="주문수락완료"></h6>
+						      	<h6 style= "color: #ffa000; font-family: 'Jua', sans-serif; " class="text-primary" th:if = "${o.status} == 4" th:text="주문확인요청중"></h6>
 						      	
 						      	
 						      	
-		                        <h3 class="pt-2" th:text="${o.sname}">가게이름</h3>	                        
+		                        <h3 style= "color: #ffa000; font-family: 'Jua', sans-serif; " class="pt-2" th:text="${o.sname}">가게이름</h3>	                        
 		                      </div>
 		                    </div>
 		                  </nav>
@@ -101,7 +93,7 @@ $(document).ready(function(){
 		                        </div>
 		                        <div class="d-grid gap-3 col-sm-auto">
 		                        	        	                        
-		                         <a th:href="@{myordersde(oid=${o.oid})}"  class="btn btn-line text-dark" >주문상세</a>
+		                         <a style= "font-family: 'Jua', sans-serif; " th:href="@{myordersde(uid=${o.uid}, oid=${o.oid})}"  class="btn btn-line text-dark" >주문상세</a>
 					
 								  
 								</div>

@@ -1,3 +1,7 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 
   <script>
@@ -43,7 +47,7 @@
 			
 			if(c == true){
 				 var id =   $('input[name="gtcl"]').val();
-				 var collid =   $('input[name="gtcll"]').val();
+				 var collid =   $('input[name="gtcl"]').val();
 				 var sid =   $('input[name="gtsid"]').val();
 				location.href='/host/menu/msel/delete?sArray='+sArray+"&id="+id+"&collid="+collid+"&sid="+sid;
 			}
@@ -55,7 +59,7 @@
 	  
 	  $('#menuimplbt').click(function(){
 		  var id =   $('input[name="gtcl"]').val();
-		  var collid =   $('input[name="gtcll"]').val();
+		  var collid =   $('input[name="gtcl"]').val();
 		  var sid =   $('input[name="gtsid"]').val();
 			location.href = "/host/menu/menuregister?id="+id+"&collid="+collid+"&sid="+sid;
 		});
@@ -82,7 +86,7 @@
 	<div class="card">
 		<div class="card-body">
 			<div>
-			<h4 class="card-title" th:text="${col.name}" >메뉴판 관리</h4>
+			<h4 style= "color: #ffa000; font-family: 'Jua', sans-serif; " class="card-title" th:text="${col.name}" >메뉴판 관리</h4>
 			<button th:if="${mnlist.isEmpty()}" id="coldlt" type="button" class="btn btn-info">컬렉션 삭제</button>
 			
 			</div>
@@ -101,7 +105,7 @@
 				</div>
 				<table class="table table-striped">
 					<thead>
-                    <tr>
+                    <tr style= "color: #ffa000; font-family: 'Jua', sans-serif; ">
                         <th><input type="checkbox" id="selectall" /></th>
                         <th>이미지</th>
                         <th>메뉴명</th>
@@ -111,7 +115,7 @@
                 </thead>
                 
                 <tbody>
-                    <tr th:each="mn: ${mnlist}">
+                    <tr style= "font-family: 'Jua', sans-serif; " th:each="mn: ${mnlist}">
                  		
                       	<td><input type="checkbox" name="selected" th:value="${mn.id}"></td>
                       	<td><img class="img-fluid rounded-3 h-100" th:if="${mn.img != null }" 
@@ -139,9 +143,9 @@
 				</table>
 			</div>
 			<hr><center>
-			<button id="menuimplbt" type="button" class="btn btn-info">메뉴 등록</button>
-			<button id="menudltlbt" type="button" class="btn btn-info">메뉴 삭제</button>
-			<button id="backbtn2" type="button" class="btn btn-info">뒤로 가기</button>
+			<button id="menuimplbt" type="button" class="btn btn-info" style= " font-family: 'Jua', sans-serif; ">메뉴 등록</button>
+			<button id="menudltlbt" type="button" class="btn btn-info" style= "font-family: 'Jua', sans-serif; ">메뉴 삭제</button>
+			<button id="backbtn2" type="button" class="btn btn-info" style= " font-family: 'Jua', sans-serif; ">뒤로 가기</button>
 			</center>
 		</div>
 	</div>

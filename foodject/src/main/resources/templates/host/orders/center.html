@@ -1,14 +1,7 @@
-<!-- websoket -->
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-	<script src="/webjars/sockjs-client/sockjs.min.js"></script>
-	<script src="/webjars/stomp-websocket/stomp.min.js"></script>
 	<style>
 		#all {
 			width: 400px;
@@ -29,6 +22,12 @@
 			height: 200px;
 			overflow: auto;
 			border: 2px solid green;
+		}
+		#dropdownMenuDate2{
+			color:  black;
+			background: #ffa000;
+			background-color: #ffa000;
+			
 		}
 	</style>
 
@@ -87,6 +86,7 @@
 						+ "</h4>");
 				});
 				stompClient.subscribe('/send/tomsg/' + id, function (msg) {
+					alert("msg : " +   msg);
 					$("#to").append(
 						"<h4>" + JSON.parse(msg.body).sendid + ":" +
 						JSON.parse(msg.body).content1
@@ -316,11 +316,11 @@
 			var cnt = 0;
 			changeStatus(modal_data.id, status);
 			modal_data.status = status;
-
-
-
-			$('#'+orders_status.get(status)).after(makeTr(modal_data));
+		
 			$('#modal_close').click();
+			alert("변경 되었습니다.");
+			$('#'+orders_status.get(status)).after(makeTr(modal_data));
+			
 			$('#orders_tr'+ modal_data.id).remove();
 			getData();
 		}
@@ -455,7 +455,6 @@
 				<button type="button" class="btn btn-success btn-rounded btn-fw" id="modal_delivery_success" onclick="upDateStatus(1)">배달 완료</button>
 				<button type="button" class="btn btn-danger btn-rounded btn-fw" id="modal_no" onclick="upDateStatus(0)">거절</button>
 				<button type="button" class="btn btn-warning" id="modal_cancel" onclick="upDateStatus(0)">취소</button>
-				<button type="button" onclick="modal_close()">모달 닫기</button>
 				<button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="modal_close">닫기</button>
 			</div>
 		</div>
@@ -476,14 +475,14 @@
 						<div class="col-md-12 grid-margin">
 							<div class="row">
 								<div class="col-12 col-xl-8 mb-4 mb-xl-0">
-									<h3 class="font-weight-bold">주문 확인</h3>
+									<h3 style= "color: #ffa000; font-family: 'Jua', sans-serif; " class="font-weight-bold">주문 확인</h3>
 									<!-- <h6 class="font-weight-normal mb-0">All systems are running smoothly! You have <span class="text-primary">3 unread alerts!</span></h6> -->
 								</div>
 
 								<div class="col-12 col-xl-4">
 									<div class="justify-content-end d-flex" th:if="${slist != null}">
 										<div class="dropdown flex-md-grow-1 flex-xl-grow-0">
-											<button class="btn btn-sm btn-light bg-white dropdown-toggle" type="button"
+											<button class="btn btn-sm btn-warning bg-white dropdown-toggle" type="button"
 												id="dropdownMenuDate2" data-toggle="dropdown" aria-haspopup="true"
 												aria-expanded="true">
 												<i class="mdi mdi-calendar"></i>
@@ -540,9 +539,8 @@
 <!-- content-wrapper ends -->
 
 
-
+<!-- 
 <body>
-	<!-- <H1 th:text="${session.loginid.id}">ID</H1> -->
 	<H1 id="status">Status</H1>
 	<H1 id="servermsg1">Server Msg1</H1>
 	<H1 id="servermsg2">Server Msg2</H1>
@@ -562,6 +560,6 @@
 	<input type="text" id="totext"><button id="sendto">Send</button>
 	<div id="to"></div>
 
-</body>
+</body> -->
 
 </html>

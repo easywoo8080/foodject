@@ -1,3 +1,7 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,7 +30,7 @@
 	<button type="submit" id="submitbt" hidden></button>
 	<table class="table table-striped">
 		<thead>
-			<tr>
+			<tr style= "color: #ffa000; font-family: 'Jua', sans-serif; ">
 				<th style="width: 2px;"></th>
 				<th style="width: 2px;">가게 ID</th>
 				<th style="width: 2px;">로고</th>
@@ -39,7 +43,7 @@
 		</thead>
 
 		<tbody th:if="${slist != null}">
-			<tr th:each="s:${slist}">
+			<tr style= "font-family: 'Jua', sans-serif; " th:each="s:${slist}">
 				<td class="py-1"> <input type="checkbox" th:value="${s.id}" name="selected"> </td>
 				<td class="py-1" th:text="${s.id}"> </td>
 				<td>

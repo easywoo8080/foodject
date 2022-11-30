@@ -14,7 +14,9 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	<!-- 삭제도 장바구니 삭제에 CASCADE로 작동 -->
 	
 	<select id="select_byCtid" parameterType="Integer" resultType="useroptcartVO">
-		SELECT * FROM optcart
+		SELECT oc.ctid, oc.oid, cr.uid, o.price, o.name FROM optcart oc
+		INNER JOIN cart cr ON oc.ctid = cr.id
+		INNER JOIN opt o ON oc.oid = o.id
 		WHERE ctid=#{ctid}
 	</select>
 	

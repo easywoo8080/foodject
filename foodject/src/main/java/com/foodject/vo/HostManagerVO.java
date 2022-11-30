@@ -53,6 +53,11 @@ public class HostManagerVO {
 		this.pwd = pwd;
 		this.email = email;
 	}
+	public HostManagerVO(String id, String pwd) {
+		super();
+		this.id = id;
+		this.pwd = pwd;
+	}
 	
 	
 	

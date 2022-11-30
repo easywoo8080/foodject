@@ -1,3 +1,8 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
+
 <script type="text/javascript" th:src="'//dapi.kakao.com/v2/maps/sdk.js?appkey=' + ${kakaosrc} + '&libraries=services'"></script>
 <script>
   var geocoder = new kakao.maps.services.Geocoder();
@@ -159,54 +164,54 @@
 <div class="col-12 grid-margin stretch-card">
   <div class="card">
     <div class="card-body">
-      <h4 class="card-title">가게 등록</h4>
+      <h4 style= "color: #ffa000; font-family: 'Jua', sans-serif; " class="card-title">가게 등록</h4>
       <p class="text-danger">
         가게 등록시 "사업자 등록증" 사진이 꼭 필요합니다.
       </p>
       <form class="registerform" id="registerform">
         <div class="form-group">
-          <label>File upload</label>
+          <label style= "color: #ffa000; font-family: 'Jua', sans-serif; ">등록증 선택</label>
           <div class="input-group col-xs-12">
             <input type="file" class="form-control file-upload-info" id="bnumcheck" placeholder="Upload Image"
               accept=".jpg, .jpeg, .png">
             <span class="input-group-append">
-              <button class="file-upload-browse btn btn-primary" id="bnumbtn" type="button">Check</button>
+              <button class="file-upload-browse btn btn-primary" id="bnumbtn" type="button" style= " font-family: 'Jua', sans-serif; ">검색</button>
             </span>
           </div>
         </div>
         <div class="form-group">
-          <label for="name">상호명</label>
+          <label for="name" style= "color: #ffa000; font-family: 'Jua', sans-serif; ">상호명</label>
           <input type="text" class="form-control" id="name" name="name" placeholder="상호명" readonly>
         </div>
         <div class="form-group">
-          <label for="bnum">사업자 번호</label>
+          <label for="bnum" style= "color: #ffa000; font-family: 'Jua', sans-serif; ">사업자 번호</label>
           <input type="text" class="form-control" id="bnum" name="bnum" placeholder="사업자 번호" readonly>
         </div>
         <div class="form-group">
-          <label for="addr">주소</label>
+          <label for="addr" style= "color: #ffa000; font-family: 'Jua', sans-serif; ">주소</label>
           <div class="input-group col-xs-12">
             <input type="text" class="form-control" id="address" name="addr" readonly="readonly" placeholder="주소">
             <span class="input-group-append">
-              <button class="file-upload-browse btn btn-primary" id="addrbtn" type="button">주소 검색</button>
+              <button style= "font-family: 'Jua', sans-serif; " class="file-upload-browse btn btn-primary" id="addrbtn" type="button">주소 검색</button>
               <input type="number" hidden id="latt" name="latt">
               <input type="number" hidden id="logt" name="logt">
             </span>
           </div>
         </div>
         <div class="form-group">
-          <label for="addrd">세부 주소</label>
+          <label for="addrd" style= "color: #ffa000; font-family: 'Jua', sans-serif; ">세부 주소</label>
           <input type="text" class="form-control" id="addrd" name="addrd" placeholder="세부 주소">
         </div>
         <div class="form-group">
-          <label for="phon">전화 번호</label>
+          <label for="phon" style= "color: #ffa000; font-family: 'Jua', sans-serif; ">전화 번호</label>
           <input type="tel" maxlength="13" class="form-control" id="phon" name="phon" placeholder="전화 번호">
         </div>
         <div class="form-group">
-          <label for="allmin">최소 결제 금액</label>
+          <label for="allmin" style= "color: #ffa000; font-family: 'Jua', sans-serif; ">최소 결제 금액</label>
           <input type="number" class="form-control" id="allmin" name="allmin" value="1000" placeholder="최소 결제 금액">
         </div>
         <div class="form-group">
-          <label>가게 로고</label>
+          <label style= "color: #ffa000; font-family: 'Jua', sans-serif; ">가게 로고</label>
           <div class="input-group col-xs-12">
             <input type="file" class="form-control file-upload-info" id="logo" name="mf" placeholder="Upload Image"
               accept=".jpg, .jpeg, .png">
@@ -216,11 +221,11 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="info">가게 소개</label>
+          <label for="info" style= "color: #ffa000; font-family: 'Jua', sans-serif; ">가게 소개</label>
           <textarea class="form-control" id="info" name="info" rows="4"></textarea>
         </div>
-        <button class="btn btn-primary" id="submitbtn" type="button">Submit</button>
-        <button class="btn btn-light" id="cancelbtn" type="button">Cancel</button>
+        <button class="btn btn-primary" id="submitbtn" type="button" style= "font-family: 'Jua', sans-serif; ">등록</button>
+        <button class="btn btn-light" id="cancelbtn" type="button" style= "font-family: 'Jua', sans-serif; ">취소</button>
       </form>
     </div>
   </div>

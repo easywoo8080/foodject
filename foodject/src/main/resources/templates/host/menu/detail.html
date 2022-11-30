@@ -1,3 +1,6 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 
 <style type="text/css">
 .modal-dialog{
@@ -6,7 +9,7 @@
          left: 0%;   
        	 transform: translate(-50%, -50%);
          max-height: calc(200vh - 110px);
-         max-width: calc(100vh - 70px);
+         max-width: calc(120vh - 70px);
          overflow: auto;
 }
 
@@ -164,9 +167,9 @@ $(document).ready(function () {
 
 
 <div class="col-12 grid-margin stretch-card">
-  <div class="card">
+  <div style= "font-family: 'Jua', sans-serif; " class="card">
     <div class="card-body">
-      <h4 class="card-title" th:text="${mnd.name} + ' 상세'">메뉴 등록</h4>
+      <h4 style= "color: #ffa000; font-family: 'Jua', sans-serif; " class="card-title" th:text="${mnd.name} + ' 상세'">메뉴 등록</h4>
       <form class="updateform" id="updateform">
         
         <div class="form-group" >
@@ -176,20 +179,20 @@ $(document).ready(function () {
 						src="https://kr.object.ncloudstorage.com/foodject/menu/default.jpg" alt="error2" />
       </div>
         <div class="form-group">
-          <label for="name">메뉴명</label>
+          <label for="name" style= "color: #ffa000; font-family: 'Jua', sans-serif; ">메뉴명</label>
           <input type="text" class="form-control" id="name" name="name" placeholder="메뉴명" th:value="${mnd.name}">
         </div>
        
         <div class="form-group">
-          <label for="price">가격</label>
+          <label for="price" style= "color: #ffa000; font-family: 'Jua', sans-serif; ">가격</label>
           <input type="number" class="form-control" id="price" name="price" placeholder="메뉴 가격"  th:value="${mnd.price}">
         </div>
          <div class="form-group">
-          <label for="line">순서</label>
+          <label for="line" style= "color: #ffa000; font-family: 'Jua', sans-serif; ">순서</label>
           <input type="number" class="form-control" id="line" name="line" placeholder="메뉴 순서"  th:value="${mnd.line}">
         </div>
          <div class="form-group">
-          <label for="cid">카테고리</label>
+          <label for="cid" style= "color: #ffa000; font-family: 'Jua', sans-serif; ">카테고리</label>
           <select name="cid" class="form-control form-control-item" id="cid">
                 	<option th:each="ct:${ctlist}" 
                 	th:value="${ct.id}" 
@@ -199,7 +202,7 @@ $(document).ready(function () {
                 </select>
         </div>
         <div class="form-group">
-        <label for="collid">컬렉션</label>
+        <label for="collid" style= "color: #ffa000; font-family: 'Jua', sans-serif; ">컬렉션</label>
                 <select name="collid" class="form-control form-control-item" id="collid" >
                 	<option th:each="co:${clist}" 
                 	th:if="${co.sid == mnd.sid}" 
@@ -211,10 +214,10 @@ $(document).ready(function () {
                </select>
             </div>
        		<div class="form-group">
-          <label for="opt">옵션</label>
+          <label for="opt" style= "color: #ffa000; font-family: 'Jua', sans-serif; ">옵션</label>
           <table class="table table-striped" th:unless = "${olist.isEmpty()}">
 					<thead>
-                    <tr>
+                    <tr style= "color: #ffa000; font-family: 'Jua', sans-serif; ">
                         <th>옵션명</th>
                         <th>가격</th>   
                     </tr>
@@ -234,7 +237,7 @@ $(document).ready(function () {
           
           </ul>
           
-          <a class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#optModal"> 옵션 관리 </a>
+          <a class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#optModal" style= " font-family: 'Jua', sans-serif; "> 옵션 관리 </a>
         
          	
          	
@@ -242,7 +245,7 @@ $(document).ready(function () {
         
         
           <div class="form-group">
-           <label>이미지 수정</label>
+           <label style= "color: #ffa000; font-family: 'Jua', sans-serif; ">이미지 수정</label>
             <input type="file" class="form-control file-upload-info" id="mndimg" name="mf" placeholder="Upload Image"
               accept=".jpg, .jpeg, .png">
             <span class="input-group-append">
@@ -259,8 +262,8 @@ $(document).ready(function () {
 				</div>
         
      
-        <button class="btn btn-primary" id="mnudt" type="button">수정</button>
-        <button class="btn btn-light" id="mndcancel" type="button">취소</button>
+        <button class="btn btn-primary" id="mnudt" type="button" style= " font-family: 'Jua', sans-serif; ">수정</button>
+        <button class="btn btn-light" id="mndcancel" type="button" style= "color: #ffa000; font-family: 'Jua', sans-serif; ">취소</button>
       </form>
         
 			<div > 
@@ -275,7 +278,7 @@ $(document).ready(function () {
 				    <div class="modal-content">
 				      <div class="modal-header">
 				        
-				        <h4 class="modal-title">옵션 수정 / 삭제</h4>
+				        <h4 class="modal-title" style= "color: #ffa000; font-family: 'Jua', sans-serif; ">옵션 수정 / 삭제</h4>
 				      </div>
 				      
 				      <div class="modal-body">
@@ -283,7 +286,7 @@ $(document).ready(function () {
 				       <div class="form-group" >
 				       <table class="table table-striped" th:unless = "${olist.isEmpty()}">
 					<thead>
-                    <tr>
+                    <tr  style= "color: #ffa000; font-family: 'Jua', sans-serif; ">
                     	<th><input type="checkbox" id="selectall2" /></th>
                         <th>옵션명</th>
                         <th>가격</th>   
@@ -315,18 +318,18 @@ $(document).ready(function () {
 					<hr style="border: dotted 1px blue;">
 					<form id="addoptform">
 					<div>
-					<h4> 옵션 추가</h4>
+					<h4 style= "color: #ffa000; font-family: 'Jua', sans-serif; "> 옵션 추가</h4>
 					<hr>
 					</div>
 					<div>
-					 <label for="price">옵션명: </label>
+					 <label for="price" style= "color: #ffa000; font-family: 'Jua', sans-serif; ">옵션명: </label>
 					 </div>
 					<div class="form-group">
          			
 					<input class="form-control" type="text" id="addopt" name="name" >
 					</div>
 					<div>
-					<label for="price">가격:</label>
+					<label for="price" style= "color: #ffa000; font-family: 'Jua', sans-serif; ">가격:</label>
 					</div>
 					<div class="form-group">
         			  
@@ -342,9 +345,9 @@ $(document).ready(function () {
 					</div>	     
 				      </div>
 				      <div class="modal-footer">
-				      	 <button class="btn btn-primary" id="optadd" type="button">추가</button>
+				      	 <button class="btn btn-primary" id="optadd" type="button" style= "font-family: 'Jua', sans-serif; ">추가</button>
 				      	
-				      	 <button class="btn btn-primary" id="optdlt" type="button">삭제</button>
+				      	 <button class="btn btn-primary" id="optdlt" type="button" style= " font-family: 'Jua', sans-serif; ">삭제</button>
 				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				      </div>
 				    </div>

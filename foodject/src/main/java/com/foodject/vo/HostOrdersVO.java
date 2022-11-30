@@ -41,6 +41,20 @@ public class HostOrdersVO {
 	private String shop_mid;
 	
 	
+	public HostOrdersVO(String shop_mid) {
+		this.shop_mid = shop_mid;
+	}
+
+	public HostOrdersVO(Date date, int allprice) {
+		this.date = date;
+		this.allprice = allprice;
+	}
+
+	public HostOrdersVO( String shop_mid, int allprice) {
+		this.shop_mid = shop_mid;
+		this.allprice = allprice;
+	}
+
 	public HostOrdersVO(int id) {
 		this.id = id;
 	}

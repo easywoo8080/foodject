@@ -23,7 +23,11 @@
 	<link rel="manifest" href="/bootstrap/foodwagon/assets/img/favicons/manifest.json">
 	<meta name="msapplication-TileImage" content="/bootstrap/foodwagon/assets/img/favicons/mstile-150x150.png">
 	<meta name="theme-color" content="#ffffff">
-
+	
+	 <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+	
 
 	<!-- ===============================================-->
 	<!--    Stylesheets-->
@@ -196,6 +200,7 @@
 				'action': '/cust/registerimpl'
 			});
 			$('#registerform').submit();
+			alert("회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.");
 
 		});
 	});
@@ -221,21 +226,21 @@
 			<div class="container">
 				<div class="row flex-center">
 					<div class="col-md-7 col-lg-6 py-8 text-md-start text-center">
-						<div class="card w-xxl-75">
-							<div class="card-body">
+						<div class="card w-xxl-100">
+							<div class="card-body px-5 py-5">
 								<div class="tab-content mt-3" id="nav-tabContent">
 
 									<!-- Register Div -->
 									<div class="tab-pane fade show active" id="nav-home" role="tabpanel"
 										aria-labelledby="nav-home-tab">
 										<div class="text-center">
-											<h2>회원가입</h2>
-											<p>*표시는 선택항목입니다</p>
+											<h2 style= "color: #ffa000; font-family: 'Jua', sans-serif; " >회원가입</h2>
+											<p style= " font-family: 'Jua', sans-serif; " >*표시는 선택항목입니다</p>
 										</div>
 										<form id="registerform" class="align-items-center">
 											<div class="col">
 
-												<label for="id">아이디를 입력해주세요</label><br>
+												<label style= "color: #ffa000; font-family: 'Jua', sans-serif; "  for="id">아이디를 입력해주세요</label><br>
 												<div class="input-group">
 													<input class="form-control input-box form-foodwagon-control" id="id"
 														name="id" type="text" placeholder="4자리 이상" required>
@@ -243,7 +248,7 @@
 												<span style="font-size: smaller; color:gray;" id="idspan"></span>
 												<p></p>
 
-												<label for="pwd">비밀번호를 입력해주세요</label><br>
+												<label style= "color: #ffa000; font-family: 'Jua', sans-serif; "  for="pwd">비밀번호를 입력해주세요</label><br>
 												<div class="input-group">
 													<input class="form-control input-box form-foodwagon-control"
 														id="pwd" name="pwd" type="password" placeholder="Password"
@@ -253,7 +258,7 @@
 												<span style="font-size: smaller; color:gray;" id="pwdspan"></span>
 												<p></p>
 
-												<label for="pwdcheck">비밀번호 확인</label><br>
+												<label style= "color: #ffa000; font-family: 'Jua', sans-serif; "  for="pwdcheck">비밀번호 확인</label><br>
 												<div class="input-group">
 													<input class="form-control input-box form-foodwagon-control"
 														id="pwdcheck" type="password" placeholder="Password checking"
@@ -263,7 +268,7 @@
 												<span style="font-size: smaller; color:gray;" id="pwdcheckspan"></span>
 												<p></p>
 
-												<label for="name">이름을 입력해주세요</label><br>
+												<label style= "color: #ffa000; font-family: 'Jua', sans-serif; "  for="name">이름을 입력해주세요</label><br>
 												<div class="input-group">
 													<input class="form-control input-box form-foodwagon-control"
 														id="name" name="name" type="text" placeholder="Full Name"
@@ -273,7 +278,7 @@
 												<span style="font-size: smaller; color:gray;" id="namespan"></span>
 												<p></p>
 
-												<label for="birth">생년월일을 입력하세요</label><br>
+												<label style= "color: #ffa000; font-family: 'Jua', sans-serif; "  for="birth">생년월일을 입력하세요</label><br>
 												<div class="input-group">
 													<input class="form-control input-box form-foodwagon-control"
 														id="birth" name="birth" type="date" placeholder="Birthday"
@@ -281,7 +286,7 @@
 												</div>
 												<p></p>
 
-												<label for="phon">휴대폰 번호를 입력하세요</label><br>
+												<label style= "color: #ffa000; font-family: 'Jua', sans-serif; "  for="phon">휴대폰 번호를 입력하세요</label><br>
 												<div class="input-group">
 													<input class="form-control input-box form-foodwagon-control"
 														id="phon" name="phon" type="tel" placeholder="Phone Number"
@@ -292,11 +297,11 @@
 
 
 
-												<label for="addr">주소를 입력하세요</label><br>
+												<label style= "color: #ffa000; font-family: 'Jua', sans-serif; "  for="addr">주소를 입력하세요</label><br>
 												<div class="input-group">
 													<input class="form-control input-box form-foodwagon-control"
 														id="addr" name="addr" type="text" placeholder="도로명 주소" readonly>
-													<button type="button" class="btn btn-primary"
+													<button style= " font-family: 'Jua', sans-serif; "  type="button" class="btn btn-primary"
 														onclick="execDaumPostcode()">우편번호찾기</button>
 												</div>
 												<p></p>
@@ -309,7 +314,7 @@
 												<p></p>
 
 
-												<label for="nick">닉네임을 입력해주세요</label><br>
+												<label style= "color: #ffa000; font-family: 'Jua', sans-serif; "  for="nick">닉네임을 입력해주세요</label><br>
 												<div class="input-group">
 													<input class="form-control input-box form-foodwagon-control"
 														id="nick" name="nick" type="text" placeholder="Nickname"
@@ -319,7 +324,7 @@
 												<span style="font-size: smaller; color:gray;" id="nickspan"></span>
 												<p></p>
 
-												<label for="img">* 프로필사진을 등록하시겠어요? </label><br>
+												<label style= "color: #ffa000; font-family: 'Jua', sans-serif; "  for="img">* 프로필사진을 등록하시겠어요? </label><br>
 												<div class="input-group">
 													<input class="form-control input-box form-foodwagon-control"
 														id="img" name="mf" type="file" placeholder="Profile Image">
@@ -327,7 +332,7 @@
 												<p></p>
 
 												<div class="d-grid gap-3 col-sm-auto p-4">
-													<button id="registerbtn" class="btn btn-danger"
+													<button style= " font-family: 'Jua', sans-serif; "  id="registerbtn" class="btn btn-danger"
 														type="submit">회원가입하기</button>
 												</div>
 

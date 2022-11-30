@@ -18,6 +18,8 @@ public class DataAPI {
 
     @Value("serviceKey")
     String serviceKey;
+
+    
 	public Object dataapi(String zcode) throws Exception {
         StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552584/EvCharger/getChargerInfo"); /*URL*/
         urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + serviceKey); /*Service Key*/

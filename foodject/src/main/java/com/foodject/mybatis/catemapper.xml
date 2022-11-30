@@ -16,7 +16,5 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	<update id="update" parameterType="CateVO">
 		UPDATE mncate name=#{name} WHERE id=#{id}
 	</update>
-
-
 	
 </mapper>

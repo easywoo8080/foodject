@@ -23,4 +23,8 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		SELECT pwd FROM manager WHERE ID=#{id} and EMAIL=#{email}
 	</select>
 	
+	<update id="updatepwd" parameterType="HostManagerVO">
+		UPDATE manager SET PWD=#{pwd} WHERE ID=#{id}
+	</update>
+	
 </mapper>

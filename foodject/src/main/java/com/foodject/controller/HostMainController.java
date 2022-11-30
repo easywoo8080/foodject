@@ -3,16 +3,18 @@ package com.foodject.controller;
 
 import javax.servlet.http.HttpSession;
 
+import com.foodject.biz.HostManagerBiz;
+import com.foodject.biz.HostOrdersBiz;
+import com.foodject.restapi.BcrytPassward;
+import com.foodject.vo.HostManagerVO;
+import com.foodject.vo.HostOrdersVO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.foodject.biz.HostManagerBiz;
-import com.foodject.restapi.BcrytPassward;
-import com.foodject.vo.HostManagerVO;
 
 @Controller
 @RequestMapping("/host")
@@ -22,25 +24,46 @@ public class HostMainController {
 	
 	@Autowired
 	HostManagerBiz mbiz;
+	@Autowired
+	HostOrdersBiz obiz;
 	
 	@Autowired
 	BcrytPassward bp;
-	public void mainProduct(Model m) {
-//		List<ProductVO> plist = null;
-//		String pimgpath = Paths.get(System.getProperty("user.dir"), "src", "main","resources","static","img", "product_img").toString();
-//		System.out.println("imgpath : " +  pimgpath);
-//		try {	
-//			plist = mainbiz.get();
-//			m.addAttribute("plist", plist);
-//			m.addAttribute("imgpath", pimgpath);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-	}
+
+
 
 	@RequestMapping("")
-	public ModelAndView main(ModelAndView mv) {
+	public ModelAndView main(ModelAndView mv, HttpSession session) {
+		HostManagerVO mng = (HostManagerVO) session.getAttribute("loginshop");
+		if( mng == null ){
+			mv.setViewName("/host/login");
+			return mv;
+		}
+
+		int result = 0;
+		HostOrdersVO ovo = new HostOrdersVO();
+		ovo.setShop_mid(mng.getId());
+		try {
+			result = obiz.mainseletcstatus(mng.getId());
+			mv.addObject("mainseletcstatus", result);
+			result = obiz.mainallorders(mng.getId());
+			mv.addObject("mainallorders", result);
+			ovo = obiz.mainallpriceday(ovo);
+			System.out.println("dayallprice"+ovo);
+			mv.addObject("dayallprice", ovo);
+			ovo = new HostOrdersVO();
+			ovo.setShop_mid(mng.getId());
+			ovo = obiz.mainallpricemonth(ovo);
+			System.out.println("monthallprice"+ovo);
+			mv.addObject("monthallprice", ovo);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
 		mv.setViewName("host/index");
+		
 		mv.addObject("center", "host/center");
 		mv.addObject("kakaosrc",kakaoJSKey);
 		return mv;
@@ -48,7 +71,7 @@ public class HostMainController {
 	
 	@RequestMapping("/sample")
 	public String sample(Model m) {
-		mainProduct(m);
+
 		return "host/sample";
 	}
 	@RequestMapping("/register")
@@ -61,7 +84,7 @@ public class HostMainController {
 		
 		try {
 			//비밀번호 암호화 처리
-			//manager.setPwd(bp.hashPassward(manager.getPwd()));
+			manager.setPwd(bp.hashPassward(manager.getPwd()));
 
 			mbiz.register(manager);
 			session.setAttribute("loginshop", manager);
@@ -112,6 +135,7 @@ public class HostMainController {
 	}
 	@RequestMapping("/findpwd")
 	public ModelAndView findpwd(ModelAndView mv) {
+		
 		mv.setViewName("host/findpwd");
 		return mv;
 	}
@@ -131,19 +155,27 @@ public class HostMainController {
 		return mv;
 	}
 	@RequestMapping("/changepwd2")
-	public ModelAndView changepwd2(ModelAndView mv) {
+	public ModelAndView changepwd2(ModelAndView mv, HttpSession session) {
+		HostManagerVO mng = (HostManagerVO) session.getAttribute("loginshop");
+		session.setAttribute("loginshop", mng);
+		try {
+			mng= mbiz.get(mng.getId());
+			mv.addObject("m", mng);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		mv.setViewName("host/changepwd2");
 		return mv;
 	}
 	@RequestMapping("/update2")
-	public String update2(Model m, HostManagerVO obj, HttpSession session) {
-		HostManagerVO mng = (HostManagerVO) session.getAttribute("loginshop");
-		session.setAttribute("loginshop", mng);
-		System.out.println(mng);
+	public String update2(Model m, HostManagerVO obj) {
+		obj.setPwd(bp.hashPassward(obj.getPwd()));
 		try {
-			mng= mbiz.get(mng.getId());
-			m.addAttribute("m", mng);
-			mbiz.modify(obj);
+			
+			mbiz.modifypwd(obj);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -151,4 +183,29 @@ public class HostMainController {
 		
 		return "redirect:mypage";
 	}
+	
+	
+	@RequestMapping("/findpwd/findpwdimpl")
+	public String findpwdimpl(Model m, String id, String email, String pwd) {
+		HostManagerVO manager = null;
+		try {
+			manager = mbiz.get(manager.getId());
+			System.out.println(manager);
+			if(manager == null) {
+				throw new Exception("아이디가 존재하지 않습니다.");
+			}
+			
+			if (manager.getEmail().equals(email)) {
+				throw new Exception(manager.getPwd());
+				
+			}else {
+				throw new Exception("이메일이 틀립니다.");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "host/login";
+	}
+	
+	
 }

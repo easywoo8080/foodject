@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html lang="ko" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
 <style>
 .logo{
 	border-radius:10px;
@@ -8,60 +13,78 @@
 	object-fit:contain;
 }
 
+.unable{
+	opacity: 0.3;
+}
 </style>
+<script>
 
+
+</script>
   <body>
-
+	
     <section id="testimonial">
       <div class="container">
         <div class="row h-100">
           <div class="col-lg-7 mx-auto text-center mb-6">
-            <h5 class="fw-bold fs-3 fs-lg-5 lh-sm mb-3">Featured Restaurants</h5>
+            <h5 style= "color: #ffa000; font-family: 'Jua', sans-serif; "  class="fw-bold fs-3 fs-lg-5 lh-sm mb-3">가게목록</h5>
           </div>
         </div>
         <div class="row gx-2">
         
           <div class="col-sm-6 col-md-4 col-lg-3 h-100 mb-5" th:each="shop:${shoplist}">
          	<a th:href="'/shop/main?sid='+${shop.id}" th:if="${shop.status == 1}">
-            <div class="card card-span h-100 text-white rounded-3"><img class="img-fluid rounded-3 h-100" src="/bootstrap/foodwagon/assets/img/gallery/food-world.png" alt="..." />
+            <div class="card card-span h-100 text-white rounded-3">
+				<img class="img-fluid logo" th:if="${shop.logo != null }"
+					th:src="'https://kr.object.ncloudstorage.com/foodject/shop/'+${shop.logo}" alt="error1" />
+				<img class="img-fluid logo" th:unless="${shop.logo != null }"
+					src="https://kr.object.ncloudstorage.com/foodject/shop/logo1.jpg" alt="error2" />
               <div class="card-body ps-0">
                 <div class="d-flex align-items-center mb-3">
-                	<!-- 가게 로고 -->
+                	<!-- 가게 로고 >
                 	<div class="col-3">
 		                	<img class="img-fluid logo" th:if="${shop.logo != null }"
 								th:src="'https://kr.object.ncloudstorage.com/foodject/shop/'+${shop.logo}" alt="error1" />
 							<img class="img-fluid logo" th:unless="${shop.logo != null }"
 								src="https://kr.object.ncloudstorage.com/foodject/shop/logo1.jpg" alt="error2" />
 					</div>
-					<!-- 가게 로고 끝 -->	
+					< 가게 로고 끝 -->	
                   <div class="flex-1 ms-3">
-                    <h5 class="mb-0 fw-bold text-1000" th:text="${shop.name}">가게이름</h5>
+
+                    <h2 style= " font-family: 'Jua', sans-serif; "  class="mb-0 fw-bold text-1000" th:text="${shop.name}">가게이름</h2>
+
                     <!-- span class="text-primary fs--1 me-1"><i class="fas fa-star"></i></span><span class="mb-0 text-primary">46</span-->
                   </div>
                 </div>
-                <span class="badge bg-soft-success p-2"><span class="fw-bold fs-1 text-success">Open Now</span></span>
+                <span class="badge bg-soft-success p-2"><span class="fw-bold fs-1 text-success">영업중</span></span>
                 
               </div>
             </div>
             </a>
-            <a href="#" th:unless="${shop.status == 1}">
-            <div class="card card-span h-100 text-white rounded-3"><img class="img-fluid rounded-3 h-100" src="/bootstrap/foodwagon/assets/img/gallery/food-world.png" alt="..." />
+            <a th:unless="${shop.status == 1}">
+            <div class="card card-span h-100 text-white rounded-3">
+					
+              	<img class="img-fluid logo unable" th:if="${shop.logo != null }"
+					th:src="'https://kr.object.ncloudstorage.com/foodject/shop/'+${shop.logo}" alt="error1" />
+				<img class="img-fluid logo unable" th:unless="${shop.logo != null }"
+					src="https://kr.object.ncloudstorage.com/foodject/shop/logo1.jpg" alt="error2" />
+		
               <div class="card-body ps-0">
                 <div class="d-flex align-items-center mb-3">
-                	<!-- 가게 로고 -->
-                	<div class="col-3">
-		                	<img class="img-fluid logo" th:if="${shop.logo != null }"
-								th:src="'https://kr.object.ncloudstorage.com/foodject/shop/'+${shop.logo}" alt="error1" />
-							<img class="img-fluid logo" th:unless="${shop.logo != null }"
-								src="https://kr.object.ncloudstorage.com/foodject/shop/logo1.jpg" alt="error2" />
+                	<!-- 가게 로고 >
+               		<div class="col-3">
+	                	<img class="img-fluid logo" th:if="${shop.logo != null }"
+							th:src="'https://kr.object.ncloudstorage.com/foodject/shop/'+${shop.logo}" alt="error1" />
+						<img class="img-fluid logo" th:unless="${shop.logo != null }"
+							src="https://kr.object.ncloudstorage.com/foodject/shop/logo1.jpg" alt="error2" />
 					</div>
-					<!-- 가게 로고 끝 -->	
+					< 가게 로고 끝 -->	
                   <div class="flex-1 ms-3">
-                    <h5 class="mb-0 fw-bold text-1000" th:text="${shop.name}">가게이름</h5>
+                    <h2 style= " font-family: 'Jua', sans-serif; " class="mb-0 fw-bold text-1000 unable" th:text="${shop.name}">가게이름</h2>
                     <!-- span class="text-primary fs--1 me-1"><i class="fas fa-star"></i></span><span class="mb-0 text-primary">46</span-->
                   </div>
                 </div>
-                <span class="badge bg-soft-danger p-2"><span class="fw-bold fs-1 text-danger">Opens Tomorrow</span></span>
+                <span class="badge bg-soft-danger p-2"><span style= " font-family: 'Jua', sans-serif; "  class="fw-bold fs-1 text-danger">준비중</span></span>
                 
               </div>
             </div>
@@ -71,7 +94,7 @@
 
           
          
-          <div class="col-12 d-flex justify-content-center mt-5"> <a class="btn btn-lg btn-primary" href="#!">View All <i class="fas fa-chevron-right ms-2"> </i></a></div>
+          <div class="col-12 d-flex justify-content-center mt-5"> <a style= " font-family: 'Jua', sans-serif; "  class="btn btn-lg btn-primary" href="/">뒤로 가기 <i class="fas fa-chevron-left ms-2"> </i></a></div>
         </div>
       </div>
     </section>

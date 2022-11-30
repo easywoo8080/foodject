@@ -3,15 +3,13 @@
 PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.foodject.mapper.HostOrdersMapper" >
-	<!-- <select id="selectbills" parameterType="String" resultType="HostOrdersVO">
-		select s.id, s.logo, s.name, s.mid,  s.status , count(case when o.status = 2 then 1 end) as ordersstatus ,  sum( case when o.status = 1 then d.num * d.price end )+sum( case when o.status = 1 then dt.oprice end ) as allprice
-		from shop s 
-		left join orders o on s.id = o.sid 
-		left join detail d on o.id = d.odid
-		left join dopt dt on d.id = dt.did
-		group by s.id, o.sid, s.status
-		having s.status != 0 and  s.mid = #{mid};
-	</select> -->
+	
+	<select id="select" parameterType="int" resultType="HostOrdersVO">
+		select o.id, s.name as shop_name, s.mid as shop_mid, o.uid, o.addr, o.addrd, o.phon, o.status, o.date 
+		from orders o 
+		left join shop s on o.sid = s.id 
+		where o.id = #{odid};
+	</select>
 	<select id="selectbills" parameterType="int" resultType="HostOrdersVO">
 		select distinct o.id, o.uid , o.sid, o.addr, o.addrd, o.phon, o.nick, o.date,o.status, o.ask, d.odid , ( select sum( num * price ) from detail group by odid having odid = o.id)
 		+  ( select IFNULL( sum(oprice), 0 ) from dopt dt left join detail d on d.id = dt.did where d.odid = o.id ) as allprice
@@ -57,6 +55,51 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 				o.status desc, o.id desc
 		</if> 
 	</select>
+	<select id="mainseletcstatus" parameterType="string" resultType="int">
+		select distinct count(*) from orders o join shop s on o.sid = s.id where s.mid = #{shop_mid} and o.status &gt; 1 and o.status &lt; 10;  
+   </select>
+   <select id="mainallorders" parameterType="string" resultType="int">
+	select distinct count(*) from orders o join shop s on o.sid = s.id where s.mid = #{shop_mid} and o.status = 1;
+	</select>
+	<select id="mainallpriceday" parameterType="HostOrdersVO" resultType="HostOrdersVO" >
+		select mid, sum(allprice) as allprice  from (
+			SELECT s.id,o.id as oid, o.status as ostatus,  s.mid, s.name,  sum( d.num * d.price) + sum( doptsum.alloprice ) as allprice , o.date
+					FROM orders o
+					left join detail d on o.id = d.odid
+					left join shop s on o.sid = s.id
+					left join (select did, sum(oprice) as alloprice from dopt group by did) as doptsum on d.id = doptsum.did
+					where o.status = 1 and date_format(o.date, '%Y-%m-%d') = date_format(now(), '%Y-%m-%d') and s.mid = #{shop_mid}
+					group by o.id) as tb
+		group by tb.mid;
+	</select>
+	<select id="mainallpricemonth" parameterType="HostOrdersVO" resultType="HostOrdersVO">
+		select mid, sum(allprice) as allprice  from (
+			SELECT s.id,o.id as oid, o.status as ostatus,  s.mid, s.name,  sum( d.num * d.price) + sum( doptsum.alloprice ) as allprice , o.date
+					FROM orders o
+					left join detail d on o.id = d.odid
+					left join shop s on o.sid = s.id
+					left join (select did, sum(oprice) as alloprice from dopt group by did) as doptsum on d.id = doptsum.did
+					where o.status = 1 and  date_format(o.date, '%Y-%m') = date_format(now(), '%Y-%m') and s.mid = #{shop_mid}
+			group by o.id) as tb
+		group by tb.mid;
+	</select>
+	<select id="bardayfrommonth" parameterType="HostOrdersVO" resultType="HostOrdersVO">
+		select date, sum(allprice) as allprice from (
+			SELECT s.id,o.id as oid, o.status as ostatus,  s.mid, s.name,  sum( d.num * d.price) + sum( doptsum.alloprice ) as allprice , o.date
+			FROM orders o
+			left join detail d on o.id = d.odid
+			left join shop s on o.sid = s.id
+			left join (select did, sum(oprice) as alloprice from dopt group by did) as doptsum on d.id = doptsum.did
+			where o.status = 1 and s.mid = #{shop_mid}
+			group by o.id) as ds
+        group by date
+        having date between date_format(now(), '%Y-%m-01') and date_format(now(), '%Y-%m-%d');
+	</select>
+
+
+
+
+
 	<update id="changestatus" parameterType="HostOrdersVO"  >
 		update orders set status=#{status} where id=#{id};
 	</update >

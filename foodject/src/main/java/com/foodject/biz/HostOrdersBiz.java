@@ -54,5 +54,19 @@ public class HostOrdersBiz implements Biz<Integer, HostOrdersVO> {
 		return dao.changestatus(obj);
 	}
 
-
+	public int mainseletcstatus(String obj) throws Exception{
+		return dao.mainseletcstatus(obj);
+	}
+	public int mainallorders(String obj) throws Exception{
+		return dao.mainallorders(obj);
+	}
+	public HostOrdersVO mainallpriceday(HostOrdersVO obj) throws Exception{
+		return dao.mainallpriceday(obj);
+	}
+	public HostOrdersVO mainallpricemonth(HostOrdersVO obj) throws Exception{
+		return dao.mainallpricemonth(obj);
+	}
+	public List<HostOrdersVO> bardayfrommonth(HostOrdersVO obj) throws Exception{
+		return dao.bardayfrommonth(obj);
+	}
 }

@@ -26,4 +26,9 @@ public class UserErrorController {
 	public String pathError(Model m) {
 		return "user/error/patherror";
 	}
+	
+	@RequestMapping("/orderError")
+	public String orderErrorError(Model m) {
+		return "user/error/ordererror";
+	}
 }

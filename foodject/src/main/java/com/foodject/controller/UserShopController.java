@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.foodject.biz.UserCartBiz;
 import com.foodject.biz.UserCollectionBiz;
+import com.foodject.biz.UserCustBiz;
 import com.foodject.biz.UserMenuBiz;
 import com.foodject.biz.UserOptBiz;
 import com.foodject.biz.UserOptcartBiz;
@@ -27,6 +28,9 @@ import com.foodject.vo.UserShopVO;
 @Controller
 @RequestMapping("/shop")
 public class UserShopController {
+	
+	@Autowired
+	UserCustBiz csbiz;
 	
 	@Autowired
 	UserShopBiz sbiz;  
@@ -46,25 +50,15 @@ public class UserShopController {
 	@Autowired
 	UserCartBiz crbiz;
 	
-	public void mainProduct(Model m) {
-//		List<ProductVO> plist = null;
-//		String pimgpath = Paths.get(System.getProperty("user.dir"), "src", "main","resources","static","img", "product_img").toString();
-//		System.out.println("imgpath : " +  pimgpath);
-//		try {	
-//			plist = mainbiz.get();
-//			m.addAttribute("plist", plist);
-//			m.addAttribute("imgpath", pimgpath);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-	}
+
 
 	@RequestMapping("")
 	public String shop(Model m, int cid, double latt, double logt) {
 		MarkerVO obj = new MarkerVO(latt,logt,cid);
 		List<UserShopVO> list = null;
-		
+
 		try {	
+			
 			list = sbiz.getMain(obj);
 			m.addAttribute("shoplist",list);
 			m.addAttribute("center", "user/shop/center");
@@ -74,6 +68,7 @@ public class UserShopController {
 		}
 		return "user/index";
 	}
+	
 	
 	@RequestMapping("/main")
 	public String main(Model m, int sid, HttpSession session) {
@@ -104,7 +99,7 @@ public class UserShopController {
 				String uid = cust.getId();
 				crlist = crbiz.get_byUid(new UserCartVO(0,uid,sid));
 				row = crlist.size();
-				System.out.println(row);
+				// System.out.println(row);
 				m.addAttribute("row",row);
 			}else {
 				System.out.println("Login session is null");
@@ -139,5 +134,6 @@ public class UserShopController {
 		return "redirect:/shop/main?sid="+sid;
 	}
 	
-
+	
+	
 }

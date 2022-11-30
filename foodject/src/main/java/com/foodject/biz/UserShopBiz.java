@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.foodject.frame.Biz;
 import com.foodject.mapper.UserShopMapper;
 import com.foodject.vo.MarkerVO;
+import com.foodject.vo.SearchVO;
 import com.foodject.vo.UserShopVO;
 
 @Service
@@ -53,5 +54,8 @@ public class UserShopBiz implements Biz<Integer, UserShopVO> {
 		return dao.selectMain(obj);
 	}
 	
+	public List<UserShopVO> search(SearchVO obj) throws Exception{
+		return dao.search(obj);
+	}
 
 }

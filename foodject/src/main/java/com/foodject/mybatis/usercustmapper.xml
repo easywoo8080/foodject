@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
       </if>      
    </update>
    
-   <delete id="updatests" parameterType="usercustVO">
+   <delete id="updatests" parameterType="String">
       UPDATE cust SET status=0 WHERE id=#{id}
    </delete>
    
@@ -42,5 +42,8 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
       UPDATE cust SET pwd=#{pwd} WHERE id=#{id}  
 	</update>  
 
+	<update id="updateAddr" parameterType="addrVO">
+		UPDATE cust SET addr=#{addr}, addrd=#{addrd} WHERE id=#{id}
+	</update>
    
 </mapper>

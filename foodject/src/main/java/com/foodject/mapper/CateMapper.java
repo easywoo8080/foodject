@@ -13,7 +13,6 @@ public interface CateMapper {
 
 	public void insert(CateVO obj) throws Exception;
 	public void update(CateVO obj) throws Exception;
-	
 	public CateVO select(int id) throws Exception;
 	public List<CateVO> selectall() throws Exception;
 	

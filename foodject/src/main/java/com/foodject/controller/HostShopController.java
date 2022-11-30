@@ -83,6 +83,9 @@ public class HostShopController {
 		mv.addObject("center", "/host/shop/analysis");
 		return mv;
 	}
+	
+
+
 	@RequestMapping("analysis")
 	public ModelAndView analysis(ModelAndView mv, HttpSession session) {
 
@@ -147,28 +150,17 @@ public class HostShopController {
 	public ModelAndView registerimpl(ModelAndView mv, HostShopVO obj, HttpSession session) {
 		HostManagerVO manager = null;
 		manager = (HostManagerVO) session.getAttribute("loginshop");
-	
-
 		obj.setMid(manager.getId());
 		obj.setStatus(1);
 		// ?????.jpg
-
-
 		// System.out.println("latt : " + latt);
 		// System.out.println("logt : " + logt);
-
-
 		try {
-			biz.registerMarker(obj);
-
-			
+			biz.registerMarker(obj);		
 			biz.registerShop(obj);
-
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		String imgname = obj.getMf().getOriginalFilename();
 		String[] splitname = imgname.split("[.]");
 		String idname = obj.getId();
@@ -181,6 +173,7 @@ public class HostShopController {
 			try {
 				// saveFile(실제 파일, 저장할 이름, 사용되는 DB 컬럼명)
 				biz.modify(obj);
+				
 				ut.saveFile(obj.getMf(), savename, "shop");
 			} catch (Exception e) {
 				e.printStackTrace();

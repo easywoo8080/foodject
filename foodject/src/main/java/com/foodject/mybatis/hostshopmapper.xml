@@ -9,14 +9,28 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		WHERE s.id=#{id} and status !=0;
 	</select>
 	<select id="selectmid" parameterType="String" resultType="HostShopVO">
-		select distinct s.id, s.logo, s.name, s.mid,  s.status , count(case when o.status = 2 then 1 end) as ordersstatus ,  sum( case when o.status = 1 then d.num * d.price end )+sum( case when o.status = 1 then dt.oprice end ) as allprice
+		select 
+			s.id, s.logo,s.name, s.status, s.mid, ifnull (ordersstatus, 0) as ordersstatus, ifnull( sum(sps.mprice)+ sum(sps.oprice), 0 ) as allprice
 		from shop s 
-		left join orders o on s.id = o.sid 
-		left join detail d on o.id = d.odid
-		left join dopt dt on d.id = dt.did
-		group by s.id, o.sid, s.status
-		having s.status != 0 and  s.mid = #{mid};
-
+		left join 
+			( SELECT s.id, o.status as ostatus,  s.mid, s.name, sum( d.num * d.price) as mprice, sum( doptsum.alloprice ) as oprice 
+				FROM orders o
+				left join detail d on o.id = d.odid
+				left join shop s on o.sid = s.id
+				left join (select did, sum(oprice) as alloprice from dopt group by did) as doptsum on d.id = doptsum.did
+				where o.status = 1
+				group by d.odid, o.id 
+				) as sps on s.id = sps.id
+		left join (select 
+			o.sid,  ifnull( count(case when o.status >= 2 then 1 end) , 0) as ordersstatus 
+		from 
+			shop s
+		join 
+			orders o on s.id = o.sid
+		group by o.sid) as count on s.id = count.sid
+		where s.mid = #{mid}
+		group by s.id
+		having s.status != 0;
 	</select>
 	<!-- <insert id="insert" parameterType="HostShopVO" userGeneratedKeys="true" keyProperty="id"> -->
 	<insert id="insertMarker" parameterType="HostShopVO" useGeneratedKeys="true" keyProperty="marker" keyColumn="id">

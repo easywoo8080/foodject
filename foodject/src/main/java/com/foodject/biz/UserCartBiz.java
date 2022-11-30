@@ -56,4 +56,8 @@ public class UserCartBiz implements Biz<Integer, UserCartVO> {
 		dao.updateCount(v);
 	}
 
+	public void modifyDeprice(UserCartVO v) throws Exception{
+		dao.updateDeprice(v);
+	}
+	
 }

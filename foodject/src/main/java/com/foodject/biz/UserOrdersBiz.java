@@ -8,13 +8,19 @@ import org.springframework.stereotype.Service;
 import com.foodject.frame.Biz;
 import com.foodject.mapper.UserOrdersMapper;
 import com.foodject.vo.UserOrdersMyVO;
+import com.foodject.vo.UserOrdersVO;
 
 @Service
-public class UserOrdersBiz implements Biz<Integer, UserOrdersMyVO> {
+public class UserOrdersBiz implements Biz<Integer, UserOrdersVO> {
 
 	@Autowired
 	UserOrdersMapper dao;
 
+	@Override
+	public void register(UserOrdersVO v) throws Exception {
+		dao.insert(v);		
+	}
+	
 	public List<UserOrdersMyVO> getod(String k) throws Exception{
 		return dao.selectod(k);
 	}
@@ -39,7 +45,7 @@ public class UserOrdersBiz implements Biz<Integer, UserOrdersMyVO> {
 		return dao.selectoddeopt(k);
 	}
 	
-	public UserOrdersMyVO getallprice(Integer k) throws Exception{
+	public Integer getallprice(Integer k) throws Exception{
 		return dao.selectallprice(k);
 	}
 	
@@ -47,14 +53,10 @@ public class UserOrdersBiz implements Biz<Integer, UserOrdersMyVO> {
 		return dao.selectcount(k);
 	}
 
-	@Override
-	public void register(UserOrdersMyVO v) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	@Override
-	public void modify(UserOrdersMyVO v) throws Exception {
+	public void modify(UserOrdersVO v) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
@@ -66,13 +68,13 @@ public class UserOrdersBiz implements Biz<Integer, UserOrdersMyVO> {
 	}
 
 	@Override
-	public UserOrdersMyVO get(Integer k) throws Exception {
+	public UserOrdersVO get(Integer k) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<UserOrdersMyVO> get() throws Exception {
+	public List<UserOrdersVO> get() throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}

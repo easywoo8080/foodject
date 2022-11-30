@@ -1,24 +1,21 @@
 <!DOCTYPE html>
 <html lang="ko">
 
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Skydash Admin</title>
-  <!-- plugins:css -->
   <link rel="stylesheet" href="/bootstrap/skydash/vendors/feather/feather.css">
   <link rel="stylesheet" href="/bootstrap/skydash/vendors/ti-icons/css/themify-icons.css">
   <link rel="stylesheet" href="/bootstrap/skydash/vendors/css/vendor.bundle.base.css">
-  <!-- endinject -->
-  <!-- Plugin css for this page -->
-  <!-- End plugin css for this page -->
-  <!-- inject:css -->
   <link rel="stylesheet" href="/bootstrap/skydash/css/vertical-layout-light/style.css">
-  <!-- endinject -->
   <link rel="shortcut icon" href="/bootstrap/skydash/images/favicon.png" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 
 <body>
@@ -38,19 +35,20 @@ $(document).ready(function(){
 	$('#pwdc').click(function(){
 		 var pwd = $('#cpwd').val();
 		 var ipwd = $('#ipwd').val();
-		if( pwd != ipwd){
-			alert("비밀번호가 틀립니다.");	
-		}
-		if( pwd == ipwd){
-			location.href = "/host/changepwd2"
-		}
-		
+
+     $.ajax({
+			url: '/host/login/checkpwdbphost',
+			data: { 'pwd' : pwd },
+			success: function (result) {
+				if (result == '1') {
+					alert("비밀번호가 틀립니다.");	
+				} else {
+					location.href = "/host/changepwd2"
+				}
+			}
+		});	
 		
 	});
-
-	
-	
-	
 });
 
 </script>
@@ -62,10 +60,10 @@ $(document).ready(function(){
           <div class="col-lg-4 mx-auto">
             <div class="auth-form-light text-left py-5 px-4 px-sm-5">
               <div class="brand-logo">
-                <a href="/host"><img src="/bootstrap/skydash/images/logo.svg" alt="logo"></a>
+                <a href="/host"><img src="/bootstrap/foodwagon/assets/img/gallery/logo.svg" alt="logo"></a>
               </div>
-              <h4>비밀번호 변경</h4>
-              <h6 class="font-weight-light"  >현재 비밀번호를 입력하세요</h6>
+              <h2 style= "color: #ffa000; font-family: 'Jua', sans-serif; ">비밀번호 변경</h2>
+              <p class="font-weight-light"  >현재 비밀번호를 입력하세요</p>
             
               
                 
@@ -80,7 +78,7 @@ $(document).ready(function(){
                 
                
                 <div class="mt-3">
-                  <button id="pwdc" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">비밀번호 확인</button>
+                  <button id="pwdc" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" style= " font-family: 'Jua', sans-serif; ">비밀번호 확인</button>
                 </div>
                 
                 <div class="mb-2">
