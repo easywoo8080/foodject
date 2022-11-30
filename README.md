@@ -22,7 +22,12 @@
 
 ![image](https://user-images.githubusercontent.com/106216211/185185852-688e9261-ed04-4bdc-82b9-71573f86c777.png)
 
+## 데이터 베이스
 
+![화면 캡처 2022-11-30 102527](https://user-images.githubusercontent.com/105187615/204684790-d4e35f31-f4c1-4130-bd9e-8cafc5f3cfa9.jpg)
+
+![화면 캡처 2022-11-30 102425](https://user-images.githubusercontent.com/105187615/204684925-75b7f906-22d4-41e2-9028-50facbdc6caf.jpg)
+  
 ## 4. 주요기능 소개
 
 ##### 문성용
